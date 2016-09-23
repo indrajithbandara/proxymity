@@ -1,8 +1,8 @@
 package com.object0r.tools.proxymity.collectors;
 
+import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
-import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.toortools.Utilities;
 
 import java.io.FileNotFoundException;
@@ -11,10 +11,18 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Samair ru collector.
+ */
 public class SamairRuCollector extends ProxyCollector
 {
 
 
+    /**
+     * Instantiates a new Samair ru collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public SamairRuCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

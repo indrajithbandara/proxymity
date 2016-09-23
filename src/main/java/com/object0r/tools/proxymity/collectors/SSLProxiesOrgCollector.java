@@ -9,8 +9,16 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Ssl proxies org collector.
+ */
 public class SSLProxiesOrgCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Ssl proxies org collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public SSLProxiesOrgCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

@@ -6,15 +6,21 @@ import com.object0r.tools.proxymity.datatypes.ProxyInfo;
 import com.object0r.toortools.Utilities;
 
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Proxy moo jp collector.
+ */
 public class ProxyMooJpCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Proxy moo jp collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public ProxyMooJpCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

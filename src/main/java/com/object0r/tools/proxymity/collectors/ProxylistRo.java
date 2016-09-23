@@ -3,12 +3,19 @@ package com.object0r.tools.proxymity.collectors;
 import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
-import com.object0r.toortools.Utilities;
 
 import java.util.Vector;
 
+/**
+ * The type Proxylist ro.
+ */
 public class ProxylistRo extends ProxyCollector
 {
+    /**
+     * Instantiates a new Proxylist ro.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public ProxylistRo(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

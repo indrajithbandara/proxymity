@@ -1,8 +1,8 @@
 package com.object0r.tools.proxymity.collectors;
 
+import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
-import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.toortools.Utilities;
 
 import java.net.URL;
@@ -12,9 +12,17 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Xroxy com collector.
+ */
 public class XroxyComCollector extends ProxyCollector
 {
 
+    /**
+     * Instantiates a new Xroxy com collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public XroxyComCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

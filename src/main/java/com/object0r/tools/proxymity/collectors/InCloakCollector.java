@@ -1,17 +1,26 @@
 package com.object0r.tools.proxymity.collectors;
 
+import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
-import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.toortools.Utilities;
+
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type In cloak collector.
+ */
 public class InCloakCollector extends ProxyCollector
 {
     //String imageMagickPath = "C:\\Program Files\\ImageMagick-6.9.3-Q16\\convert.exe";
 
+    /**
+     * Instantiates a new In cloak collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public InCloakCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

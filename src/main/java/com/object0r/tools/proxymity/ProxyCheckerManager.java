@@ -1,7 +1,7 @@
 package com.object0r.tools.proxymity;
 
-import com.object0r.tools.proxymity.helpers.ConsoleColors;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
+import com.object0r.tools.proxymity.helpers.ConsoleColors;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,14 +11,33 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The type Proxy checker manager.
+ */
 public class ProxyCheckerManager extends Thread
 {
+    /**
+     * The Db connection.
+     */
     Connection dbConnection;
+    /**
+     * The Fixed pool.
+     */
     ExecutorService fixedPool;
+
+    /**
+     * Instantiates a new Proxy checker manager.
+     *
+     * @param dbConnection the db connection
+     */
     public ProxyCheckerManager(Connection dbConnection)
     {
         this.dbConnection = dbConnection;
     }
+
+    /**
+     * Shut down.
+     */
     public void shutDown()
     {
         fixedPool.shutdownNow();
@@ -86,17 +105,33 @@ public class ProxyCheckerManager extends Thread
         }
     }
 
+    /**
+     * Gets date time as string.
+     *
+     * @return the date time as string
+     */
     String getDateTimeAsString()
     {
         java.util.Date date = new java.util.Date();
         return date.toString();
     }
 
+    /**
+     * Print message.
+     *
+     * @param message the message
+     */
     void printMessage(String message)
     {
         ConsoleColors.printGreen(getDateTimeAsString()+ ": "+message);
     }
 
+    /**
+     * Gets proxy infos from result set.
+     *
+     * @param rs the rs
+     * @return the proxy infos from result set
+     */
     Vector<ProxyInfo> getProxyInfosFromResultSet(ResultSet rs)
     {
         Vector<ProxyInfo> proxyInfos = new Vector<ProxyInfo>();
@@ -129,6 +164,12 @@ public class ProxyCheckerManager extends Thread
         return proxyInfos;
     }
 
+    /**
+     * Gets random dead proxies.
+     *
+     * @param count the count
+     * @return the random dead proxies
+     */
     Vector<ProxyInfo> getRandomDeadProxies( int count)
     {
         Vector<ProxyInfo> proxyInfos = new Vector<ProxyInfo>();
@@ -153,8 +194,9 @@ public class ProxyCheckerManager extends Thread
 
     /**
      * Returns the dead proxies to check. Those are the proxies that have not ben checked the longest.
-     * @param count
-     * @return
+     *
+     * @param count the count
+     * @return dead proxies for check
      */
     Vector<ProxyInfo> getDeadProxiesForCheck( int count)
     {
@@ -178,6 +220,11 @@ public class ProxyCheckerManager extends Thread
         return proxyInfos;
     }
 
+    /**
+     * Gets proxies to test.
+     *
+     * @return the proxies to test
+     */
     Vector<ProxyInfo> getProxiesToTest()
     {
         Vector<ProxyInfo> proxyInfos = new Vector<ProxyInfo>();

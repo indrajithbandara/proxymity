@@ -1,8 +1,8 @@
 package com.object0r.tools.proxymity.collectors;
 
+import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
-import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.toortools.Utilities;
 
 import java.util.Base64;
@@ -11,8 +11,16 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Proxy list org collector.
+ */
 public class ProxyListOrgCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Proxy list org collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public ProxyListOrgCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

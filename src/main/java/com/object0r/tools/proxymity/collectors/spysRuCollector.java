@@ -3,16 +3,23 @@ package com.object0r.tools.proxymity.collectors;
 import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
-import com.object0r.toortools.Utilities;
 
 import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Spys ru collector.
+ */
 public class spysRuCollector extends ProxyCollector
 {
-    //TODO post will get more results.
+    /**
+     * Instantiates a new Spys ru collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
+//TODO post will get more results.
     public spysRuCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

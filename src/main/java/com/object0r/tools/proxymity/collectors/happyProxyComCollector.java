@@ -1,7 +1,7 @@
 package com.object0r.tools.proxymity.collectors;
 
-import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.ProxyCollector;
+import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
 
 import java.util.Random;
@@ -10,8 +10,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The type Happy proxy com collector.
+ */
 public class happyProxyComCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Happy proxy com collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public happyProxyComCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

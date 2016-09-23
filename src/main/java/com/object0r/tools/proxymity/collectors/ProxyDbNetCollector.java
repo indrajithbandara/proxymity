@@ -1,16 +1,23 @@
 package com.object0r.tools.proxymity.collectors;
 
-import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.ProxyCollector;
+import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
 import com.object0r.toortools.Utilities;
 
-import javax.xml.crypto.dsig.spec.ExcC14NParameterSpec;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
+/**
+ * The type Proxy db net collector.
+ */
 public class ProxyDbNetCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Proxy db net collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public ProxyDbNetCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);
@@ -65,6 +72,12 @@ public class ProxyDbNetCollector extends ProxyCollector
         return "proxydb.net";
     }
 
+    /**
+     * Process category.
+     *
+     * @param url  the url
+     * @param type the type
+     */
     public void processCategory(String url, String type)
     {
         try

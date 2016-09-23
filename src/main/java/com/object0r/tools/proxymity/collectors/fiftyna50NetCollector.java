@@ -1,16 +1,24 @@
 package com.object0r.tools.proxymity.collectors;
 
-import com.object0r.toortools.Utilities;
 import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
+import com.object0r.toortools.Utilities;
 
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Fiftyna 50 net collector.
+ */
 public class fiftyna50NetCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Fiftyna 50 net collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public fiftyna50NetCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

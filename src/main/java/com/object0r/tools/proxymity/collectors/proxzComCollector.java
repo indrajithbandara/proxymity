@@ -3,12 +3,19 @@ package com.object0r.tools.proxymity.collectors;
 import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
-import com.object0r.toortools.Utilities;
 
 import java.util.Vector;
 
+/**
+ * The type Proxz com collector.
+ */
 public class proxzComCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Proxz com collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public proxzComCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

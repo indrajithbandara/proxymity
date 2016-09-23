@@ -10,8 +10,16 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Free proxy cz collector.
+ */
 public class FreeProxyCzCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Free proxy cz collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public FreeProxyCzCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

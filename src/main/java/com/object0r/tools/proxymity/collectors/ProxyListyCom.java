@@ -9,8 +9,16 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Proxy listy com.
+ */
 public class ProxyListyCom extends ProxyCollector
 {
+    /**
+     * Instantiates a new Proxy listy com.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public ProxyListyCom(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

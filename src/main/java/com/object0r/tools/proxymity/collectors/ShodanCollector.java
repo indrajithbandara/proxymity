@@ -1,7 +1,7 @@
 package com.object0r.tools.proxymity.collectors;
 
-import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.ProxyCollector;
+import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
 import com.object0r.toortools.Utilities;
 
@@ -13,15 +13,44 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Shodan collector.
+ */
 public class ShodanCollector extends ProxyCollector
 {
+    /**
+     * The Cookie.
+     */
     String cookie = "__cfduid=d216a341634eb333d0131299ca3e1f0d71455779013; _ga=GA1.2.1267034398.1455779015; _gat=1; polito=\"32065234dccc57340f064844a4d652f5576bac0056ce0326e44985606644274b!\"; _LOCALE_=en";
+
+    /**
+     * Instantiates a new Shodan collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public ShodanCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);
     }
+
+    /**
+     * The Countries.
+     */
     String []countries = {"AF","AX","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU","AT","AZ","BS","BH","BD","BB","BY","BE","BZ","BJ","BM","BT","BO","BQ","BA","BW","BV","BR","IO","BN","BG","BF","BI","KH","CM","CA","CV","KY","CF","TD","CL","CN","CX","CC","CO","KM","CG","CD","CK","CR","CI","HR","CU","CW","CY","CZ","DK","DJ","DM","DO","EC","EG","SV","GQ","ER","EE","ET","FK","FO","FJ","FI","FR","GF","PF","TF","GA","GM","GE","DE","GH","GI","GR","GL","GD","GP","GU","GT","GG","GN","GW","GY","HT","HM","VA","HN","HK","HU","IS","IN","ID","IR","IQ","IE","IM","IL","IT","JM","JP","JE","JO","KZ","KE","KI","KP","KR","KW","KG","LA","LV","LB","LS","LR","LY","LI","LT","LU","MO","MK","MG","MW","MY","MV","ML","MT","MH","MQ","MR","MU","YT","MX","FM","MD","MC","MN","ME","MS","MA","MZ","MM","NA","NR","NP","NL","NC","NZ","NI","NE","NG","NU","NF","MP","NO","OM","PK","PW","PS","PA","PG","PY","PE","PH","PN","PL","PT","PR","QA","RE","RO","RU","RW","BL","SH","KN","LC","MF","PM","VC","WS","SM","ST","SA","SN","RS","SC","SL","SG","SX","SK","SI","SB","SO","ZA","GS","SS","ES","LK","SD","SR","SJ","SZ","SE","CH","SY","TW","TJ","TZ","TH","TL","TG","TK","TO","TT","TN","TR","TM","TC","TV","UG","UA","AE","GB","US","UM","UY","UZ","VU","VE","VN","VG","VI","WF","EH","YE","ZM","ZW"};
+    /**
+     * The Shodan threads.
+     */
     Vector<Thread> shodanThreads = new Vector<>();
+
+    /**
+     * Check shodan url boolean.
+     *
+     * @param url    the url
+     * @param cookie the cookie
+     * @param type   the type
+     * @param port   the port
+     * @return the boolean
+     */
     public boolean checkShodanUrl(String url, String cookie, String type, String port)
     {
         try
@@ -106,6 +135,13 @@ public class ShodanCollector extends ProxyCollector
         return true;
     }
 
+    /**
+     * Check shodan text.
+     *
+     * @param text   the text
+     * @param cookie the cookie
+     * @param type   the type
+     */
     public void checkShodanText(String text, String cookie, String type)
     {
         try
@@ -161,6 +197,13 @@ public class ShodanCollector extends ProxyCollector
         }
     }
 
+    /**
+     * Check shodan port.
+     *
+     * @param port   the port
+     * @param cookie the cookie
+     * @param type   the type
+     */
     public void checkShodanPort(String port, String cookie, String type)
     {
         try
@@ -215,8 +258,15 @@ public class ShodanCollector extends ProxyCollector
             e.printStackTrace();
         }
     }
+
+    /**
+     * The Shodan executor.
+     */
     ThreadPoolExecutor shodanExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
-    //Scan shodan once per session.
+    /**
+     * The Done.
+     */
+//Scan shodan once per session.
     boolean done = false;
     public Vector<ProxyInfo> collectProxies()
     {

@@ -10,8 +10,16 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type En proxy net pl collector.
+ */
 public class enProxyNetPlCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new En proxy net pl collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public enProxyNetPlCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

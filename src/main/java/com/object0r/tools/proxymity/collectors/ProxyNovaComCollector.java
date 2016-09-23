@@ -1,8 +1,8 @@
 package com.object0r.tools.proxymity.collectors;
 
+import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
-import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.toortools.Utilities;
 
 import java.util.Scanner;
@@ -10,8 +10,16 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Proxy nova com collector.
+ */
 public class ProxyNovaComCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Proxy nova com collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public ProxyNovaComCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);
@@ -70,6 +78,11 @@ public class ProxyNovaComCollector extends ProxyCollector
         return "proxynova.com";
     }
 
+    /**
+     * Get country codes string [ ].
+     *
+     * @return the string [ ]
+     */
     public String[] getCountryCodes()
     {
         String[] countries = new String[103];

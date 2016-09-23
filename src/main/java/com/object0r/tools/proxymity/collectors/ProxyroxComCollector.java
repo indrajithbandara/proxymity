@@ -3,7 +3,6 @@ package com.object0r.tools.proxymity.collectors;
 import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
-import com.object0r.toortools.Utilities;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,8 +11,16 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Proxyrox com collector.
+ */
 public class ProxyroxComCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Proxyrox com collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public ProxyroxComCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

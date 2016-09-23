@@ -10,14 +10,35 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The type Proxy collector manager.
+ */
 public class ProxyCollectorManager extends Thread
 {
+    /**
+     * The Log.
+     */
     static Logger log = Logger.getLogger(ProxyCollectorManager.class.getName());
 
+    /**
+     * The Collector parameters.
+     */
     CollectorParameters collectorParameters;
+    /**
+     * The Phantom js manager.
+     */
     PhantomJsManager phantomJsManager;
+    /**
+     * The Counts.
+     */
     DB counts = new DB("proxymity", "counts");
 
+    /**
+     * Instantiates a new Proxy collector manager.
+     *
+     * @param collectorParameters the collector parameters
+     * @param useTor              the use tor
+     */
     public ProxyCollectorManager(CollectorParameters collectorParameters, boolean useTor)
     {
         this.collectorParameters = collectorParameters;
@@ -26,6 +47,11 @@ public class ProxyCollectorManager extends Thread
         collectorParameters.setPhantomJsManager(this.phantomJsManager);
     }
 
+    /**
+     * Instantiates a new Proxy collector manager.
+     *
+     * @throws Exception the exception
+     */
     public ProxyCollectorManager() throws Exception
     {
         throw new Exception("Default constructor disabled");

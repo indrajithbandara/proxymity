@@ -9,9 +9,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * The type Main.
+ */
 public class Main
 {
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args)
     {
         String log4jConfPath = "log4j.properties";
@@ -40,6 +48,12 @@ public class Main
         proxymity.startCheckers();
         proxymity.startCollectors();
     }
+
+    /**
+     * Read properties properties.
+     *
+     * @return the properties
+     */
     static Properties readProperties()
     {
         Properties prop = new Properties();

@@ -12,8 +12,16 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Idcloak com collector.
+ */
 public class IdcloakComCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Idcloak com collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public IdcloakComCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);
@@ -72,6 +80,14 @@ public class IdcloakComCollector extends ProxyCollector
         return "idcloak.com";
     }
 
+    /**
+     * Post request string.
+     *
+     * @param targetURL    the target url
+     * @param postParams   the post params
+     * @param givenCookies the given cookies
+     * @return the string
+     */
     public static String postRequest(String targetURL, String postParams, String givenCookies)
     {
         boolean returnCookies= false;

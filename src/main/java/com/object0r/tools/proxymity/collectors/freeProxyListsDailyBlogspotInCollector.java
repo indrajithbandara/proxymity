@@ -6,8 +6,16 @@ import com.object0r.tools.proxymity.datatypes.ProxyInfo;
 
 import java.util.Vector;
 
+/**
+ * The type Free proxy lists daily blogspot in collector.
+ */
 public class freeProxyListsDailyBlogspotInCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Free proxy lists daily blogspot in collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public freeProxyListsDailyBlogspotInCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

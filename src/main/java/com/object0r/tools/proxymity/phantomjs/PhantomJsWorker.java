@@ -17,18 +17,38 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
+/**
+ * The type Phantom js worker.
+ */
 public class PhantomJsWorker extends Thread
 {
+    /**
+     * The Driver.
+     */
     protected PhantomJSDriver driver;
+    /**
+     * The Phantom js manager.
+     */
     PhantomJsManager phantomJsManager;
+    /**
+     * The Uuid.
+     */
     String uuid = UUID.randomUUID().toString();
+    /**
+     * The Use tor.
+     */
     boolean useTor = false;
 
+    /**
+     * Instantiates a new Phantom js worker.
+     *
+     * @param phantomJsManager the phantom js manager
+     * @param useTor           the use tor
+     */
     public PhantomJsWorker(PhantomJsManager phantomJsManager, boolean useTor)
     {
         this.phantomJsManager = phantomJsManager;
@@ -36,6 +56,9 @@ public class PhantomJsWorker extends Thread
         initializePhantom();
     }
 
+    /**
+     * Initialize phantom.
+     */
     public void initializePhantom()
     {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
@@ -117,11 +140,22 @@ public class PhantomJsWorker extends Thread
         }
     }
 
+    /**
+     * Process job.
+     *
+     * @param phantomJsJob the phantom js job
+     */
     public void processJob(PhantomJsJob phantomJsJob)
     {
         processJob(phantomJsJob, 1);
     }
 
+    /**
+     * Process job.
+     *
+     * @param phantomJsJob the phantom js job
+     * @param count        the count
+     */
     public void processJob(PhantomJsJob phantomJsJob, int count)
     {
         try

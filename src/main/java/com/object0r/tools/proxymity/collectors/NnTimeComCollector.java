@@ -1,13 +1,21 @@
 package com.object0r.tools.proxymity.collectors;
 
-import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.ProxyCollector;
+import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
 
 import java.util.Vector;
 
+/**
+ * The type Nn time com collector.
+ */
 public class NnTimeComCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Nn time com collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public NnTimeComCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

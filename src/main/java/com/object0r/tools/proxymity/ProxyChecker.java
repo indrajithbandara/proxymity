@@ -1,31 +1,66 @@
 package com.object0r.tools.proxymity;
 
-import com.object0r.toortools.Utilities;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
+import com.object0r.toortools.Utilities;
 
-
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * The type Proxy checker.
+ */
 public class ProxyChecker implements Runnable
 {
+    /**
+     * The constant PROXY_STATUS_PENDING.
+     */
     public final static String PROXY_STATUS_PENDING = "pending";
+    /**
+     * The constant PROXY_STATUS_INACTIVE.
+     */
     public final static String PROXY_STATUS_INACTIVE = "inactive";
+    /**
+     * The constant PROXY_STATUS_ACTIVE.
+     */
     public final static String PROXY_STATUS_ACTIVE = "active";
+    /**
+     * The constant PROXY_STATUS_DEAD.
+     */
     public static final String PROXY_STATUS_DEAD = "dead";
+    /**
+     * The My ip.
+     */
     static String myIp;
+    /**
+     * The Proxy info.
+     */
     ProxyInfo proxyInfo;
+    /**
+     * The Db connection.
+     */
     Connection dbConnection;
 
+    /**
+     * Instantiates a new Proxy checker.
+     *
+     * @param proxyInfo    the proxy info
+     * @param dbConnection the db connection
+     */
     ProxyChecker(ProxyInfo proxyInfo, Connection dbConnection)
     {
         this.proxyInfo = proxyInfo;
         this.dbConnection = dbConnection;
     }
 
+    /**
+     * Sets my ip.
+     */
     public void setMyIp()
     {
         try
@@ -230,6 +265,12 @@ public class ProxyChecker implements Runnable
         }
     }
 
+    /**
+     * Sanitize database input string.
+     *
+     * @param value the value
+     * @return the string
+     */
     public static String sanitizeDatabaseInput(String value)
     {
         while (value.contains("''")) {
@@ -261,6 +302,12 @@ public class ProxyChecker implements Runnable
         return new Proxy(type,  new InetSocketAddress(proxyInfo.getHost(), Integer.parseInt(proxyInfo.getPort()))) ;
     }
 
+    /**
+     * Sets proxy remote ip.
+     *
+     * @param proxyInfo     the proxy info
+     * @param proxyRemoteIp the proxy remote ip
+     */
     public void setProxyRemoteIp(ProxyInfo proxyInfo, String proxyRemoteIp)
     {
         try

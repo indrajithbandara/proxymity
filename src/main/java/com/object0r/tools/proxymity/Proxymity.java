@@ -6,7 +6,6 @@ import com.object0r.tools.proxymity.helpers.ConsoleColors;
 import com.object0r.toortools.Utilities;
 import com.object0r.toortools.os.OsHelper;
 import com.object0r.toortools.tor.TorHelper;
-import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.sql.Connection;
@@ -16,11 +15,17 @@ import java.sql.Statement;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
+/**
+ * The type Proxymity.
+ */
 public class Proxymity
 {
 
 
-    //TODO implement multiple ip sources
+    /**
+     * The constant PROXY_CHECKERS_COUNT.
+     */
+//TODO implement multiple ip sources
     //TODO implement muntiple anonymous detectors
     //TODO reset attributes on start
     //TODO use tor
@@ -28,20 +33,61 @@ public class Proxymity
     //TODO delete dead after some time
     //TODO transform random 500 to last order by checked
     static public int PROXY_CHECKERS_COUNT = 60;
+    /**
+     * The Table name.
+     */
     static final public String TABLE_NAME = "proxymity_proxies";
+    /**
+     * The constant RECHECK_INTERVAL_MINUTES.
+     */
     public static int RECHECK_INTERVAL_MINUTES = 20;
+    /**
+     * The constant SLEEP_BETWEEN_REPORTS_SECONDS.
+     */
     public static final long SLEEP_BETWEEN_REPORTS_SECONDS = 15;
+    /**
+     * The constant MARK_DEAD_AFTER_MINUTES.
+     */
     public static long MARK_DEAD_AFTER_MINUTES = 60;
+    /**
+     * The constant PHANTOM_JS_TIMEOUT_SECONDS.
+     */
     public static final long PHANTOM_JS_TIMEOUT_SECONDS = 15;
+    /**
+     * The constant SLEEP_SECONDS_BETWEEN_SCANS.
+     */
     public static final int SLEEP_SECONDS_BETWEEN_SCANS = 120;
+    /**
+     * The constant PHANTOM_JS_WORKERS_COUNT.
+     */
     public static int PHANTOM_JS_WORKERS_COUNT = 10;
+    /**
+     * The constant HTTPS_CHECK_URL.
+     */
     public static String HTTPS_CHECK_URL = "httpbin.org/ip";
+    /**
+     * The constant HTTPS_CHECK_STRING.
+     */
     public static String HTTPS_CHECK_STRING = "\"origin\": \"";
+    /**
+     * The constant TIMEOUT_MS.
+     */
     public static final int TIMEOUT_MS = 10000;
     ;
+    /**
+     * The Use tor.
+     */
     public boolean useTor = false;
+    /**
+     * The Proxy checker manager.
+     */
     ProxyCheckerManager proxyCheckerManager;
 
+    /**
+     * Instantiates a new Proxymity.
+     *
+     * @param properties the properties
+     */
     public Proxymity(Properties properties)
     {
         try
@@ -212,7 +258,16 @@ public class Proxymity
         }
     }
 
-    int oldPendingCount, oldCheckedCount, oldActiveCount;
+    /**
+     * The Old pending count.
+     */
+    int oldPendingCount, /**
+ * The Old checked count.
+ */
+oldCheckedCount, /**
+ * The Old active count.
+ */
+oldActiveCount;
 
     private void checkIfIdle()
     {
@@ -251,6 +306,9 @@ public class Proxymity
         proxyCheckerManager.start();
     }
 
+    /**
+     * Use tor.
+     */
     public void useTor()
     {
         System.out.println("Using Tor.");
@@ -296,66 +354,122 @@ public class Proxymity
         }
     }
 
+    /**
+     * Gets dead proxies count.
+     *
+     * @return the dead proxies count
+     */
     public int getDeadProxiesCount()
     {
         String where = "status = 'dead' ";
         return getWhereCount(where);
     }
 
+    /**
+     * Gets http https active.
+     *
+     * @return the http https active
+     */
     public int getHttpHttpsActive()
     {
         String where = "status = 'active' AND https = 'yes' AND type = 'http' ";
         return getWhereCount(where);
     }
 
+    /**
+     * Gets socks https active.
+     *
+     * @return the socks https active
+     */
     public int getSocksHttpsActive()
     {
         String where = "status = 'active' AND https = 'yes' AND (type = 'socks4' OR type ='socks5')";
         return getWhereCount(where);
     }
 
+    /**
+     * Gets socks active.
+     *
+     * @return the socks active
+     */
     public int getSocksActive()
     {
         String where = "status = 'active'  AND (type = 'socks4' OR type ='socks5')";
         return getWhereCount(where);
     }
 
+    /**
+     * Gets https.
+     *
+     * @return the https
+     */
     public int getHttps()
     {
         String where = "status = 'active' AND https = 'yes' ";
         return getWhereCount(where);
     }
 
+    /**
+     * Gets pending proxies count.
+     *
+     * @return the pending proxies count
+     */
     public int getPendingProxiesCount()
     {
         String where = "status = 'pending' ";
         return getWhereCount(where);
     }
 
+    /**
+     * Gets checked proxies count.
+     *
+     * @return the checked proxies count
+     */
     public int getCheckedProxiesCount()
     {
         String where = " status != 'pending' ";
         return getWhereCount(where);
     }
 
+    /**
+     * Gets total proxies count.
+     *
+     * @return the total proxies count
+     */
     int getTotalProxiesCount()
     {
         String where = " 1 ";
         return getWhereCount(where);
     }
 
+    /**
+     * Gets active proxies count.
+     *
+     * @return the active proxies count
+     */
     int getActiveProxiesCount()
     {
         String where = " status = 'active'";
         return getWhereCount(where);
     }
 
+    /**
+     * Gets anonymous proxies count.
+     *
+     * @return the anonymous proxies count
+     */
     int getAnonymousProxiesCount()
     {
         String where = " fullanonymous  = 'yes' AND status = 'active' ";
         return getWhereCount(where);
     }
 
+    /**
+     * Gets where count.
+     *
+     * @param where the where
+     * @return the where count
+     */
     public int getWhereCount(String where)
     {
         int count = 0;
@@ -440,14 +554,28 @@ public class Proxymity
         }
     }
 
+    /**
+     * Instantiates a new Proxymity.
+     *
+     * @throws Exception the exception
+     */
     public Proxymity() throws Exception
     {
         throw new Exception("Cannot use default constructor");
     }
 
+    /**
+     * The Db information.
+     */
     DbInformation dbInformation;
+    /**
+     * The Db connection.
+     */
     Connection dbConnection;
 
+    /**
+     * Start collectors.
+     */
     public void startCollectors()
     {
         try
@@ -467,12 +595,22 @@ public class Proxymity
         }
     }
 
+    /**
+     * Start checkers.
+     */
     public void startCheckers()
     {
 
         this.proxyCheckerManager.start();
     }
 
+    /**
+     * Is table in database boolean.
+     *
+     * @param connection the connection
+     * @param table      the table
+     * @return the boolean
+     */
     public boolean isTableInDatabase(Connection connection, String table)
     {
         try

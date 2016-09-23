@@ -3,14 +3,19 @@ package com.object0r.tools.proxymity;
 
 import com.object0r.toortools.os.RecurringProcessHelper;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * The type Main collect.
+ */
 public class MainCollect
 {
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args)
     {
         RecurringProcessHelper.checkAndRun("proxymity");

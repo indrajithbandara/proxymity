@@ -1,14 +1,21 @@
 package com.object0r.tools.proxymity.collectors;
 
-import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.ProxyCollector;
+import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
-import com.object0r.toortools.Utilities;
 
 import java.util.Vector;
 
+/**
+ * The type The proxy list com collector.
+ */
 public class theProxyListComCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new The proxy list com collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public theProxyListComCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

@@ -10,8 +10,16 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Mr hinky dink collector.
+ */
 public class MrHinkyDinkCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Mr hinky dink collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public MrHinkyDinkCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

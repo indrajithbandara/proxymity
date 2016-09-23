@@ -6,14 +6,36 @@ import com.object0r.tools.proxymity.Proxymity;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The type Phantom js manager.
+ */
 public class PhantomJsManager extends Thread
 {
+    /**
+     * Instantiates a new Phantom js manager.
+     *
+     * @param useTor the use tor
+     */
     public PhantomJsManager(boolean useTor)
     {
         this.useTor = useTor;
     }
+
+    /**
+     * The Jobs.
+     */
     HashMap<String, PhantomJsJob> jobs = new HashMap<String, PhantomJsJob>();
+    /**
+     * The Use tor.
+     */
     boolean useTor = false;
+
+    /**
+     * Add job phantom js job.
+     *
+     * @param url the url
+     * @return the phantom js job
+     */
     synchronized public PhantomJsJob addJob(String url)
     {
         if (jobs.containsKey(url))
@@ -28,6 +50,13 @@ public class PhantomJsManager extends Thread
         }
     }
 
+    /**
+     * Add job phantom js job.
+     *
+     * @param url  the url
+     * @param body the body
+     * @return the phantom js job
+     */
     synchronized public PhantomJsJob addJob(String url, String body)
     {
         if (jobs.containsKey(url))
@@ -65,7 +94,8 @@ public class PhantomJsManager extends Thread
 
     /**
      * Similar to pop.
-     * @return
+     *
+     * @return next job
      */
     synchronized PhantomJsJob getNextJob()
     {

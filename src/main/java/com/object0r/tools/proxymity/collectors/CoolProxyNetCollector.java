@@ -1,16 +1,24 @@
 package com.object0r.tools.proxymity.collectors;
 
+import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
-import com.object0r.tools.proxymity.ProxyCollector;
 
 import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Cool proxy net collector.
+ */
 public class CoolProxyNetCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Cool proxy net collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public CoolProxyNetCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);
@@ -69,6 +77,12 @@ public class CoolProxyNetCollector extends ProxyCollector
         return "cool-proxy.net";
     }
 
+    /**
+     * Str rot 13 string.
+     *
+     * @param string the string
+     * @return the string
+     */
     String strRot13(String string)
     {
 

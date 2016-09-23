@@ -1,7 +1,7 @@
 package com.object0r.tools.proxymity.collectors;
 
-import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.ProxyCollector;
+import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
 import com.object0r.toortools.Utilities;
 
@@ -10,8 +10,16 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Prem socks com.
+ */
 public class PremSocksCom extends ProxyCollector
 {
+    /**
+     * Instantiates a new Prem socks com.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public PremSocksCom(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

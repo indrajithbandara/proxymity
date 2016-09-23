@@ -10,8 +10,16 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Tor vpn com collector.
+ */
 public class TorVpnComCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Tor vpn com collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public TorVpnComCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

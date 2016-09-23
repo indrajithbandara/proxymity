@@ -1,13 +1,15 @@
 package com.object0r.tools.proxymity;
 
 import com.object0r.tools.proxymity.datatypes.CollectorParameters;
+import com.object0r.tools.proxymity.datatypes.ProxyInfo;
 import com.object0r.tools.proxymity.phantomjs.PhantomJsJob;
 import com.object0r.tools.proxymity.phantomjs.PhantomJsJobResult;
 import com.object0r.tools.proxymity.phantomjs.PhantomJsManager;
 import com.object0r.toortools.Utilities;
 import com.object0r.toortools.os.OsHelper;
-import com.object0r.tools.proxymity.datatypes.ProxyInfo;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -17,7 +19,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.net.*;
-import java.net.Proxy;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -30,18 +31,44 @@ import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Proxy collector.
+ */
 abstract public class ProxyCollector extends Thread
 {
+    /**
+     * The Image magick path.
+     */
     String imageMagickPath = "bin\\imageMagick\\convert.exe";
     private Vector<ProxyInfo> proxies = new Vector<ProxyInfo>();
 
+    /**
+     * The Db connection.
+     */
     protected Connection dbConnection;
+    /**
+     * The Driver.
+     */
     protected PhantomJSDriver driver;
+    /**
+     * The Use tor.
+     */
     protected boolean useTor = false;
-    //This exists as global
+    /**
+     * The Current sleep seconds between scans.
+     */
+//This exists as global
     int CURRENT_SLEEP_SECONDS_BETWEEN_SCANS = 0;
+    /**
+     * The Phantom js manager.
+     */
     protected PhantomJsManager phantomJsManager;
 
+    /**
+     * Instantiates a new Proxy collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public ProxyCollector(CollectorParameters collectorParameters)
     {
         try
@@ -71,15 +98,35 @@ abstract public class ProxyCollector extends Thread
         }
     }
 
+    /**
+     * Instantiates a new Proxy collector.
+     *
+     * @throws Exception the exception
+     */
     public ProxyCollector() throws Exception
     {
         throw new Exception("Default controller not allowed");
     }
 
+    /**
+     * Collect proxies vector.
+     *
+     * @return the vector
+     */
     public abstract Vector<ProxyInfo> collectProxies();
 
+    /**
+     * Collector name string.
+     *
+     * @return the string
+     */
     protected abstract String collectorName();
 
+    /**
+     * Sets sleep seconds between scans.
+     *
+     * @param minutes the minutes
+     */
     public void setSleepSecondsBetweenScans(int minutes)
     {
         this.CURRENT_SLEEP_SECONDS_BETWEEN_SCANS = minutes;
@@ -111,16 +158,29 @@ abstract public class ProxyCollector extends Thread
         proxies = new Vector<ProxyInfo>();
     }
 
+    /**
+     * Add proxy.
+     *
+     * @param proxyInfo the proxy info
+     */
     protected synchronized void addProxy(ProxyInfo proxyInfo)
     {
         proxies.add(proxyInfo);
     }
 
+    /**
+     * Gets proxies.
+     *
+     * @return the proxies
+     */
     protected Vector<ProxyInfo> getProxies()
     {
         return proxies;
     }
 
+    /**
+     * Write proxy info to database.
+     */
     public synchronized void writeProxyInfoToDatabase()
     {
         this.writeProxyInfoToDatabase(this.proxies, collectorName());
@@ -195,6 +255,12 @@ abstract public class ProxyCollector extends Thread
         }
     }
 
+    /**
+     * Sanitize database input string.
+     *
+     * @param value the value
+     * @return the string
+     */
     String sanitizeDatabaseInput(String value)
     {
         while (value.contains("''"))
@@ -204,6 +270,9 @@ abstract public class ProxyCollector extends Thread
         return value.replace("'", "''");
     }
 
+    /**
+     * Initialize phantom.
+     */
     public void initializePhantom()
     {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
@@ -263,11 +332,24 @@ abstract public class ProxyCollector extends Thread
                 .implicitlyWait(3, TimeUnit.SECONDS);
     }
 
+    /**
+     * Gets random proxy.
+     *
+     * @return the random proxy
+     * @throws Exception the exception
+     */
     protected Proxy getRandomProxy() throws Exception
     {
         return getRandomProxy(false);
     }
 
+    /**
+     * Gets random proxy.
+     *
+     * @param ssl the ssl
+     * @return the random proxy
+     * @throws Exception the exception
+     */
     protected Proxy getRandomProxy(boolean ssl) throws Exception
     {
         Proxy proxy = null;
@@ -322,6 +404,12 @@ abstract public class ProxyCollector extends Thread
         return null;
     }
 
+    /**
+     * Ocr image string.
+     *
+     * @param filename the filename
+     * @return the string
+     */
     public String ocrImage(String filename)
     {
         String text = "";
@@ -353,6 +441,12 @@ abstract public class ProxyCollector extends Thread
         return text;
     }
 
+    /**
+     * Convert image to pnm.
+     *
+     * @param inputFilename  the input filename
+     * @param outputFilename the output filename
+     */
     public void convertImageToPnm(String inputFilename, String outputFilename)
     {
         try
@@ -392,6 +486,12 @@ abstract public class ProxyCollector extends Thread
         }
     }
 
+    /**
+     * Convert image to pnm dark.
+     *
+     * @param inputFilename  the input filename
+     * @param outputFilename the output filename
+     */
     public void convertImageToPnmDark(String inputFilename, String outputFilename)
     {
         try
@@ -431,6 +531,12 @@ abstract public class ProxyCollector extends Thread
         }
     }
 
+    /**
+     * Generic parsing of text.
+     *
+     * @param page the page
+     * @param type the type
+     */
     protected void genericParsingOfText(String page, String type)
     {
         try
@@ -467,11 +573,24 @@ abstract public class ProxyCollector extends Thread
         }
     }
 
+    /**
+     * Generic parsing of url.
+     *
+     * @param url  the url
+     * @param type the type
+     */
     protected void genericParsingOfUrl(String url, String type)
     {
         genericParsingOfUrl(url, type, false);
     }
 
+    /**
+     * Generic parsing of url.
+     *
+     * @param url     the url
+     * @param type    the type
+     * @param proxify the proxify
+     */
     protected void genericParsingOfUrl(String url, String type, boolean proxify)
     {
         try
@@ -487,6 +606,14 @@ abstract public class ProxyCollector extends Thread
     }
 
 
+    /**
+     * Persistent anon read url string.
+     *
+     * @param url   the url
+     * @param limit the limit
+     * @return the string
+     * @throws Exception the exception
+     */
     public String persistentAnonReadUrl(String url, int limit) throws Exception
     {
         int failures = 0;
@@ -510,11 +637,26 @@ abstract public class ProxyCollector extends Thread
         }
     }
 
+    /**
+     * Anon read url string.
+     *
+     * @param url the url
+     * @return the string
+     * @throws Exception the exception
+     */
     public String anonReadUrl(String url) throws Exception
     {
         return readUrl(url, true);
     }
 
+    /**
+     * Read url string.
+     *
+     * @param url     the url
+     * @param proxify the proxify
+     * @return the string
+     * @throws Exception the exception
+     */
     public String readUrl(String url, boolean proxify) throws Exception
     {
         try
@@ -589,6 +731,13 @@ abstract public class ProxyCollector extends Thread
         }
     }
 
+    /**
+     * Generic parsing of url space boolean.
+     *
+     * @param page the page
+     * @param type the type
+     * @return the boolean
+     */
     protected boolean genericParsingOfUrlSpace(String page, String type)
     {
         boolean foundAtLeastOne = false;
@@ -628,12 +777,25 @@ abstract public class ProxyCollector extends Thread
         }
     }
 
+    /**
+     * Extract table rows vector.
+     *
+     * @param url the url
+     * @return the vector
+     */
     public Vector<String> extractTableRows(String url)
     {
         return extractTableRows(url, false);
     }
 
 
+    /**
+     * Extract table rows vector.
+     *
+     * @param url  the url
+     * @param anon the anon
+     * @return the vector
+     */
     public Vector<String> extractTableRows(String url, boolean anon)
     {
         Vector<String> rows = new Vector<>();
@@ -679,8 +841,10 @@ abstract public class ProxyCollector extends Thread
     }
 
     /**
-     * @param url
-     * @return
+     * Gets url body text with phantom.
+     *
+     * @param url the url
+     * @return url body text with phantom
      * @deprecated
      */
     public synchronized String getUrlBodyTextWithPhantom(String url)
@@ -717,6 +881,13 @@ abstract public class ProxyCollector extends Thread
     /* PhantomJs Stuff */
 
 
+    /**
+     * Download page with phantom js string.
+     *
+     * @param url the url
+     * @return the string
+     * @throws Exception the exception
+     */
     protected String downloadPageWithPhantomJs(String url) throws Exception
     {
         PhantomJsJobResult phantomJsJobResult = downloadWithPhantomJs(url);
@@ -730,11 +901,29 @@ abstract public class ProxyCollector extends Thread
         }
     }
 
+    /**
+     * Download page with phantom js string.
+     *
+     * @param url            the url
+     * @param postParameters the post parameters
+     * @return the string
+     * @throws Exception the exception
+     */
     protected String downloadPageWithPhantomJs(String url, String postParameters) throws Exception
     {
         return downloadPageWithPhantomJs(url, postParameters, new HashMap<String, String>(), false);
     }
 
+    /**
+     * Download page with phantom js string.
+     *
+     * @param url            the url
+     * @param postParameters the post parameters
+     * @param cookies        the cookies
+     * @param sourceCode     the source code
+     * @return the string
+     * @throws Exception the exception
+     */
     protected String downloadPageWithPhantomJs(String url, String postParameters, HashMap<String, String> cookies, boolean sourceCode) throws Exception
     {
         PhantomJsJobResult phantomJsJobResult = downloadWithPhantomJs(url, postParameters, cookies);
@@ -756,6 +945,13 @@ abstract public class ProxyCollector extends Thread
         }
     }
 
+    /**
+     * Download page source with phantom js string.
+     *
+     * @param url the url
+     * @return the string
+     * @throws Exception the exception
+     */
     protected String downloadPageSourceWithPhantomJs(String url) throws Exception
     {
         return downloadPageWithPhantomJs(url, null, new HashMap<String, String>(), true);

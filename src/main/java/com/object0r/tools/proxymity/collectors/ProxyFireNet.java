@@ -18,8 +18,16 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Proxy fire net.
+ */
 public class ProxyFireNet extends ProxyCollector
 {
+    /**
+     * Instantiates a new Proxy fire net.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public ProxyFireNet(CollectorParameters collectorParameters)
     {
         super(collectorParameters);
@@ -97,6 +105,14 @@ public class ProxyFireNet extends ProxyCollector
         }
     }
 
+    /**
+     * Save url.
+     *
+     * @param filename  the filename
+     * @param urlString the url string
+     * @throws MalformedURLException the malformed url exception
+     * @throws IOException           the io exception
+     */
     public void saveUrl(final String filename, final String urlString)
             throws MalformedURLException, IOException {
         BufferedInputStream in = null;

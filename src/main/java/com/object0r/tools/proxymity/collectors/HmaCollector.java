@@ -10,10 +10,18 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Hma collector.
+ */
 public class HmaCollector extends ProxyCollector
 {
 
 
+    /**
+     * Instantiates a new Hma collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public HmaCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

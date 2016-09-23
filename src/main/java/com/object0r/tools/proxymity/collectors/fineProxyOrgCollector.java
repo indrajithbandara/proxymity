@@ -6,8 +6,16 @@ import com.object0r.tools.proxymity.datatypes.ProxyInfo;
 
 import java.util.Vector;
 
+/**
+ * The type Fine proxy org collector.
+ */
 public class fineProxyOrgCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Fine proxy org collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public fineProxyOrgCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

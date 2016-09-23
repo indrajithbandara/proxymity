@@ -1,18 +1,26 @@
 package com.object0r.tools.proxymity.collectors;
 
+import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
-import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.toortools.Utilities;
 
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Free proxy list net collector.
+ */
 public class FreeProxyListNetCollector extends ProxyCollector
 {
 
 
+    /**
+     * Instantiates a new Free proxy list net collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public FreeProxyListNetCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

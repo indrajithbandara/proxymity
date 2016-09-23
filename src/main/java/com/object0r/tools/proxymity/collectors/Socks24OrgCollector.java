@@ -10,8 +10,16 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Socks 24 org collector.
+ */
 public class Socks24OrgCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Socks 24 org collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public Socks24OrgCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);

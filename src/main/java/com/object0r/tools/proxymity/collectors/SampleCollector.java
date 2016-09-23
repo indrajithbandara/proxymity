@@ -1,14 +1,21 @@
 package com.object0r.tools.proxymity.collectors;
 
+import com.object0r.tools.proxymity.ProxyCollector;
 import com.object0r.tools.proxymity.datatypes.CollectorParameters;
 import com.object0r.tools.proxymity.datatypes.ProxyInfo;
-import com.object0r.tools.proxymity.ProxyCollector;
-
 
 import java.util.Vector;
 
+/**
+ * The type Sample collector.
+ */
 public class SampleCollector extends ProxyCollector
 {
+    /**
+     * Instantiates a new Sample collector.
+     *
+     * @param collectorParameters the collector parameters
+     */
     public SampleCollector(CollectorParameters collectorParameters)
     {
         super(collectorParameters);
