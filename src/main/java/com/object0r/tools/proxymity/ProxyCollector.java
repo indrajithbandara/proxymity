@@ -34,14 +34,7 @@ import java.util.regex.Pattern;
 /**
  * The type Proxy collector.
  */
-abstract public class ProxyCollector extends Thread
-{
-    /**
-     * The Image magick path.
-     */
-    String imageMagickPath = "bin\\imageMagick\\convert.exe";
-    private Vector<ProxyInfo> proxies = new Vector<ProxyInfo>();
-
+abstract public class ProxyCollector extends Thread {
     /**
      * The Db connection.
      */
@@ -55,29 +48,30 @@ abstract public class ProxyCollector extends Thread
      */
     protected boolean useTor = false;
     /**
+     * The Phantom js manager.
+     */
+    protected PhantomJsManager phantomJsManager;
+    /**
+     * The Image magick path.
+     */
+    String imageMagickPath = "bin\\imageMagick\\convert.exe";
+    /**
      * The Current sleep seconds between scans.
      */
 //This exists as global
     int CURRENT_SLEEP_SECONDS_BETWEEN_SCANS = 0;
-    /**
-     * The Phantom js manager.
-     */
-    protected PhantomJsManager phantomJsManager;
+    private Vector<ProxyInfo> proxies = new Vector<ProxyInfo>();
 
     /**
      * Instantiates a new Proxy collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public ProxyCollector(CollectorParameters collectorParameters)
-    {
-        try
-        {
+    public ProxyCollector(CollectorParameters collectorParameters) {
+        try {
 
             Thread.sleep(new Random().nextInt(1000));
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         phantomJsManager = collectorParameters.getPhantomJsManager();
@@ -87,13 +81,11 @@ abstract public class ProxyCollector extends Thread
         this.dbConnection = collectorParameters.getDbConnection();
         this.useTor = collectorParameters.isUseTor();
 
-        if (!new File("tmp/").isDirectory())
-        {
+        if (!new File("tmp/").isDirectory()) {
             new File("tmp").mkdir();
         }
 
-        if (OsHelper.isWindows() && !new File(imageMagickPath).exists())
-        {
+        if (OsHelper.isWindows() && !new File(imageMagickPath).exists()) {
             System.out.println("Image magick is not installed, please install or update installation path. (http://www.imagemagick.org/download/binaries/ImageMagick-6.9.3-0-Q16-x64-dll.exe)");
         }
     }
@@ -103,8 +95,7 @@ abstract public class ProxyCollector extends Thread
      *
      * @throws Exception the exception
      */
-    public ProxyCollector() throws Exception
-    {
+    public ProxyCollector() throws Exception {
         throw new Exception("Default controller not allowed");
     }
 
@@ -127,34 +118,27 @@ abstract public class ProxyCollector extends Thread
      *
      * @param minutes the minutes
      */
-    public void setSleepSecondsBetweenScans(int minutes)
-    {
+    public void setSleepSecondsBetweenScans(int minutes) {
         this.CURRENT_SLEEP_SECONDS_BETWEEN_SCANS = minutes;
     }
 
-    public void run()
-    {
-        while (true)
-        {
+    public void run() {
+        while (true) {
 
-            try
-            {
+            try {
                 Thread.sleep(new Random().nextInt(5000));
                 initProxies();
                 Vector<ProxyInfo> proxyInfos = collectProxies();
                 writeProxyInfoToDatabase(proxyInfos, collectorName());
 
                 Thread.sleep(this.CURRENT_SLEEP_SECONDS_BETWEEN_SCANS * 1000);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private synchronized void initProxies()
-    {
+    private synchronized void initProxies() {
         proxies = new Vector<ProxyInfo>();
     }
 
@@ -163,8 +147,7 @@ abstract public class ProxyCollector extends Thread
      *
      * @param proxyInfo the proxy info
      */
-    protected synchronized void addProxy(ProxyInfo proxyInfo)
-    {
+    protected synchronized void addProxy(ProxyInfo proxyInfo) {
         proxies.add(proxyInfo);
     }
 
@@ -173,37 +156,30 @@ abstract public class ProxyCollector extends Thread
      *
      * @return the proxies
      */
-    protected Vector<ProxyInfo> getProxies()
-    {
+    protected Vector<ProxyInfo> getProxies() {
         return proxies;
     }
 
     /**
      * Write proxy info to database.
      */
-    public synchronized void writeProxyInfoToDatabase()
-    {
+    public synchronized void writeProxyInfoToDatabase() {
         this.writeProxyInfoToDatabase(this.proxies, collectorName());
     }
 
-    private synchronized void writeProxyInfoToDatabase(Vector<ProxyInfo> proxyInfos, String source)
-    {
-        try
-        {
-            for (ProxyInfo proxyInfo : proxyInfos)
-            {
+    private synchronized void writeProxyInfoToDatabase(Vector<ProxyInfo> proxyInfos, String source) {
+        try {
+            for (ProxyInfo proxyInfo : proxyInfos) {
                 if (
                         proxyInfo.getHost() == null
                                 || proxyInfo.getPort() == null
                                 || proxyInfo.getType() == null
 
-                        )
-                {
+                        ) {
                     continue;
                 }
                 String checkOnlyOnce = "no";
-                if (proxyInfo.isCheckOnlyOnce())
-                {
+                if (proxyInfo.isCheckOnlyOnce()) {
                     checkOnlyOnce = "yes";
                 }
 
@@ -238,19 +214,14 @@ abstract public class ProxyCollector extends Thread
                 //System.out.println(query);
 
                 Statement st = dbConnection.createStatement();
-                try
-                {
+                try {
                     st.executeUpdate(query);
-                }
-                catch (Exception MySQLIntegrityConstraintViolationException)
-                {
+                } catch (Exception MySQLIntegrityConstraintViolationException) {
 
                 }
                 st.close();
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -261,10 +232,8 @@ abstract public class ProxyCollector extends Thread
      * @param value the value
      * @return the string
      */
-    String sanitizeDatabaseInput(String value)
-    {
-        while (value.contains("''"))
-        {
+    String sanitizeDatabaseInput(String value) {
+        while (value.contains("''")) {
             value = value.replace("''", "'");
         }
         return value.replace("'", "''");
@@ -273,8 +242,7 @@ abstract public class ProxyCollector extends Thread
     /**
      * Initialize phantom.
      */
-    public void initializePhantom()
-    {
+    public void initializePhantom() {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
 
@@ -284,14 +252,11 @@ abstract public class ProxyCollector extends Thread
         String[] phantomArgs = new String[]{
 
         };
-        if (!useTor)
-        {
+        if (!useTor) {
             phantomArgs = new String[]{
                     "--webdriver-loglevel=NONE"
             };
-        }
-        else
-        {
+        } else {
             phantomArgs = new String[]{
                     "--webdriver-loglevel=NONE",
                     "--proxy=127.0.0.1:9050",
@@ -301,8 +266,7 @@ abstract public class ProxyCollector extends Thread
 
         String userAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0";
 
-        if (OsHelper.isWindows())
-        {
+        if (OsHelper.isWindows()) {
             ((DesiredCapabilities) caps).setJavascriptEnabled(true);
             ((DesiredCapabilities) caps).setJavascriptEnabled(true);
             ((DesiredCapabilities) caps).setCapability("takesScreenshot", true);
@@ -315,9 +279,7 @@ abstract public class ProxyCollector extends Thread
                     PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs
             );
             ((DesiredCapabilities) caps).setCapability(PhantomJSDriverService.PHANTOMJS_PAGE_SETTINGS_PREFIX + "userAgent", userAgent);
-        }
-        else
-        {
+        } else {
             ((DesiredCapabilities) caps).setJavascriptEnabled(true);
             ((DesiredCapabilities) caps).setCapability("takesScreenshot", true);
             ((DesiredCapabilities) caps).setCapability("phantomjs.content.settings.resourceTimeout", 3000);
@@ -338,8 +300,7 @@ abstract public class ProxyCollector extends Thread
      * @return the random proxy
      * @throws Exception the exception
      */
-    protected Proxy getRandomProxy() throws Exception
-    {
+    protected Proxy getRandomProxy() throws Exception {
         return getRandomProxy(false);
     }
 
@@ -350,20 +311,16 @@ abstract public class ProxyCollector extends Thread
      * @return the random proxy
      * @throws Exception the exception
      */
-    protected Proxy getRandomProxy(boolean ssl) throws Exception
-    {
+    protected Proxy getRandomProxy(boolean ssl) throws Exception {
         Proxy proxy = null;
-        try
-        {
+        try {
             String sslWhere = "";
-            if (ssl)
-            {
+            if (ssl) {
                 sslWhere = " AND https = 'yes' ";
             }
             Statement st = dbConnection.createStatement();
             ResultSet rs = st.executeQuery("SELECT host,port,type FROM " + Proxymity.TABLE_NAME + " WHERE status = 'active' " + sslWhere + " ORDER BY RAND() LIMIT 1");
-            if (rs.next())
-            {
+            if (rs.next()) {
 
                 String host = rs.getString(1);
                 String port = rs.getString(2);
@@ -372,32 +329,21 @@ abstract public class ProxyCollector extends Thread
 
                 Proxy.Type type = null;
 
-                if (proxyType.equals(ProxyInfo.PROXY_TYPES_SOCKS4))
-                {
+                if (proxyType.equals(ProxyInfo.PROXY_TYPES_SOCKS4)) {
                     type = Proxy.Type.SOCKS;
-                }
-                else if (proxyType.equals(ProxyInfo.PROXY_TYPES_SOCKS5))
-                {
+                } else if (proxyType.equals(ProxyInfo.PROXY_TYPES_SOCKS5)) {
                     type = Proxy.Type.SOCKS;
-                }
-                else if (proxyType.equals(ProxyInfo.PROXY_TYPES_HTTP))
-                {
+                } else if (proxyType.equals(ProxyInfo.PROXY_TYPES_HTTP)) {
                     type = Proxy.Type.HTTP;
-                }
-                else if (proxyType.equals(ProxyInfo.PROXY_TYPES_HTTPS))
-                {
+                } else if (proxyType.equals(ProxyInfo.PROXY_TYPES_HTTPS)) {
                     type = Proxy.Type.HTTP;
-                }
-                else
-                {
+                } else {
                     System.out.println("Else");
                     type = Proxy.Type.HTTP;
                 }
                 return new Proxy(type, new InetSocketAddress(host, Integer.parseInt(port)));
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
@@ -410,15 +356,12 @@ abstract public class ProxyCollector extends Thread
      * @param filename the filename
      * @return the string
      */
-    public String ocrImage(String filename)
-    {
+    public String ocrImage(String filename) {
         String text = "";
-        try
-        {
+        try {
             String gocrPath = "gocr";
             String command;
-            if (OsHelper.isWindows())
-            {
+            if (OsHelper.isWindows()) {
                 gocrPath = "bin/gocr049.exe";
             }
             command = gocrPath + " -C \"0123456789\" " + filename;
@@ -428,14 +371,11 @@ abstract public class ProxyCollector extends Thread
 
             String line = null;
             StringBuffer sb = new StringBuffer();
-            while ((line = input.readLine()) != null)
-            {
+            while ((line = input.readLine()) != null) {
                 sb.append(line);
             }
             return sb.toString();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return text;
@@ -447,15 +387,12 @@ abstract public class ProxyCollector extends Thread
      * @param inputFilename  the input filename
      * @param outputFilename the output filename
      */
-    public void convertImageToPnm(String inputFilename, String outputFilename)
-    {
-        try
-        {
+    public void convertImageToPnm(String inputFilename, String outputFilename) {
+        try {
             Runtime rt = Runtime.getRuntime();
             String command;
             String convertPath = "convert";
-            if (OsHelper.isWindows())
-            {
+            if (OsHelper.isWindows()) {
                 convertPath = imageMagickPath;
             }
 
@@ -465,8 +402,7 @@ abstract public class ProxyCollector extends Thread
 
             String line = null;
 
-            while ((line = input.readLine()) != null)
-            {
+            while ((line = input.readLine()) != null) {
                 System.out.println(line);
             }
 
@@ -474,14 +410,11 @@ abstract public class ProxyCollector extends Thread
 
             line = null;
 
-            while ((line = input.readLine()) != null)
-            {
+            while ((line = input.readLine()) != null) {
                 System.out.println(line);
             }
             //System.out.println(pr.waitFor());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -492,15 +425,12 @@ abstract public class ProxyCollector extends Thread
      * @param inputFilename  the input filename
      * @param outputFilename the output filename
      */
-    public void convertImageToPnmDark(String inputFilename, String outputFilename)
-    {
-        try
-        {
+    public void convertImageToPnmDark(String inputFilename, String outputFilename) {
+        try {
             Runtime rt = Runtime.getRuntime();
             String command;
             String convertPath = "convert";
-            if (OsHelper.isWindows())
-            {
+            if (OsHelper.isWindows()) {
                 convertPath = imageMagickPath;
             }
 
@@ -510,8 +440,7 @@ abstract public class ProxyCollector extends Thread
 
             String line = null;
 
-            while ((line = input.readLine()) != null)
-            {
+            while ((line = input.readLine()) != null) {
                 System.out.println(line);
             }
 
@@ -519,14 +448,11 @@ abstract public class ProxyCollector extends Thread
 
             line = null;
 
-            while ((line = input.readLine()) != null)
-            {
+            while ((line = input.readLine()) != null) {
                 System.out.println(line);
             }
             //System.out.println(pr.waitFor());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -537,18 +463,14 @@ abstract public class ProxyCollector extends Thread
      * @param page the page
      * @param type the type
      */
-    protected void genericParsingOfText(String page, String type)
-    {
-        try
-        {
+    protected void genericParsingOfText(String page, String type) {
+        try {
 
             Pattern p = Pattern.compile("\\d+\\.\\d+\\.\\d+\\.\\d+:\\d+");
             Matcher m = p.matcher(page);
 
-            while (m.find())
-            {
-                try
-                {
+            while (m.find()) {
+                try {
                     String line = m.group();
                     //System.out.println(line);
                     StringTokenizer st = new StringTokenizer(line, ":");
@@ -560,15 +482,11 @@ abstract public class ProxyCollector extends Thread
                     proxyInfo.setPort(port);
                     proxyInfo.setType(type);
                     addProxy(proxyInfo);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -579,8 +497,7 @@ abstract public class ProxyCollector extends Thread
      * @param url  the url
      * @param type the type
      */
-    protected void genericParsingOfUrl(String url, String type)
-    {
+    protected void genericParsingOfUrl(String url, String type) {
         genericParsingOfUrl(url, type, false);
     }
 
@@ -591,16 +508,12 @@ abstract public class ProxyCollector extends Thread
      * @param type    the type
      * @param proxify the proxify
      */
-    protected void genericParsingOfUrl(String url, String type, boolean proxify)
-    {
-        try
-        {
+    protected void genericParsingOfUrl(String url, String type, boolean proxify) {
+        try {
             String page = readUrl(url, proxify);
 
             genericParsingOfText(page, type);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -614,23 +527,15 @@ abstract public class ProxyCollector extends Thread
      * @return the string
      * @throws Exception the exception
      */
-    public String persistentAnonReadUrl(String url, int limit) throws Exception
-    {
+    public String persistentAnonReadUrl(String url, int limit) throws Exception {
         int failures = 0;
-        while (true)
-        {
-            try
-            {
+        while (true) {
+            try {
                 return anonReadUrl(url);
-            }
-            catch (Exception e)
-            {
-                if (failures++ > limit)
-                {
+            } catch (Exception e) {
+                if (failures++ > limit) {
                     throw e;
-                }
-                else
-                {
+                } else {
                     continue;
                 }
             }
@@ -644,8 +549,7 @@ abstract public class ProxyCollector extends Thread
      * @return the string
      * @throws Exception the exception
      */
-    public String anonReadUrl(String url) throws Exception
-    {
+    public String anonReadUrl(String url) throws Exception {
         return readUrl(url, true);
     }
 
@@ -657,37 +561,25 @@ abstract public class ProxyCollector extends Thread
      * @return the string
      * @throws Exception the exception
      */
-    public String readUrl(String url, boolean proxify) throws Exception
-    {
-        try
-        {
-            if (!proxify)
-            {
+    public String readUrl(String url, boolean proxify) throws Exception {
+        try {
+            if (!proxify) {
                 return Utilities.readUrl(url);
-            }
-            else
-            {
+            } else {
                 URL oracle = new URL(url);
                 Proxy p;
-                if (url.contains("https"))
-                {
+                if (url.contains("https")) {
                     Utilities.trustEverybody();
                     p = getRandomProxy(true);
-                }
-                else
-                {
+                } else {
                     p = getRandomProxy(false);
                 }
 
-                while (p == null)
-                {
+                while (p == null) {
                     Thread.sleep(5000);
-                    if (url.contains("https"))
-                    {
+                    if (url.contains("https")) {
                         p = getRandomProxy(true);
-                    }
-                    else
-                    {
+                    } else {
                         p = getRandomProxy(false);
                     }
                 }
@@ -700,32 +592,23 @@ abstract public class ProxyCollector extends Thread
 
                 String inputLine;
                 StringBuffer sb = new StringBuffer();
-                while ((inputLine = in.readLine()) != null)
-                {
+                while ((inputLine = in.readLine()) != null) {
                     sb.append(inputLine + "\n");
 
                 }
                 in.close();
                 return sb.toString();
             }
-        }
-        catch (SocketException e)
-        {
+        } catch (SocketException e) {
             //System.out.println("Timeout");
             return anonReadUrl(url);
-        }
-        catch (SocketTimeoutException e)
-        {
+        } catch (SocketTimeoutException e) {
             //System.out.println("Timeout");
             return anonReadUrl(url);
-        }
-        catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             throw e;
             //System.out.println("_404 e");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             //e.printStackTrace();
             throw e;
         }
@@ -738,18 +621,14 @@ abstract public class ProxyCollector extends Thread
      * @param type the type
      * @return the boolean
      */
-    protected boolean genericParsingOfUrlSpace(String page, String type)
-    {
+    protected boolean genericParsingOfUrlSpace(String page, String type) {
         boolean foundAtLeastOne = false;
-        try
-        {
+        try {
             Pattern p = Pattern.compile("\\d+\\.\\d+\\.\\d+\\.\\d+ \\d+");
             Matcher m = p.matcher(page);
 
-            while (m.find())
-            {
-                try
-                {
+            while (m.find()) {
+                try {
                     foundAtLeastOne = true;
                     String line = m.group();
                     //System.out.println(line);
@@ -762,16 +641,12 @@ abstract public class ProxyCollector extends Thread
                     proxyInfo.setPort(port);
                     proxyInfo.setType(type);
                     addProxy(proxyInfo);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             return foundAtLeastOne;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return foundAtLeastOne;
         }
@@ -783,8 +658,7 @@ abstract public class ProxyCollector extends Thread
      * @param url the url
      * @return the vector
      */
-    public Vector<String> extractTableRows(String url)
-    {
+    public Vector<String> extractTableRows(String url) {
         return extractTableRows(url, false);
     }
 
@@ -796,45 +670,33 @@ abstract public class ProxyCollector extends Thread
      * @param anon the anon
      * @return the vector
      */
-    public Vector<String> extractTableRows(String url, boolean anon)
-    {
+    public Vector<String> extractTableRows(String url, boolean anon) {
         Vector<String> rows = new Vector<>();
-        try
-        {
+        try {
             String page;
-            if (anon)
-            {
-                while (true)
-                {
-                    try
-                    {
+            if (anon) {
+                while (true) {
+                    try {
                         page = anonReadUrl(url);
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         //
                         continue;
                     }
                     break;
                 }
 
-            }
-            else
-            {
+            } else {
                 page = Utilities.readUrl(url);
             }
 
             Pattern p = Pattern.compile("<tr.*?</tr>", Pattern.DOTALL);
             Matcher m = p.matcher(page);
 
-            while (m.find())
-            {
+            while (m.find()) {
                 String line = m.group();
                 rows.add(line);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return rows;
@@ -847,19 +709,14 @@ abstract public class ProxyCollector extends Thread
      * @return url body text with phantom
      * @deprecated
      */
-    public synchronized String getUrlBodyTextWithPhantom(String url)
-    {
-        try
-        {
+    public synchronized String getUrlBodyTextWithPhantom(String url) {
+        try {
 
             driver.manage().timeouts().pageLoadTimeout(Proxymity.PHANTOM_JS_TIMEOUT_SECONDS, TimeUnit.SECONDS);
             driver.manage().timeouts().setScriptTimeout(Proxymity.PHANTOM_JS_TIMEOUT_SECONDS, TimeUnit.SECONDS);
-            try
-            {
+            try {
                 driver.get(url);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 //e.printStackTrace();
             }
 
@@ -870,9 +727,7 @@ abstract public class ProxyCollector extends Thread
 
             return page;
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "";
@@ -888,15 +743,11 @@ abstract public class ProxyCollector extends Thread
      * @return the string
      * @throws Exception the exception
      */
-    protected String downloadPageWithPhantomJs(String url) throws Exception
-    {
+    protected String downloadPageWithPhantomJs(String url) throws Exception {
         PhantomJsJobResult phantomJsJobResult = downloadWithPhantomJs(url);
-        if (phantomJsJobResult != null)
-        {
+        if (phantomJsJobResult != null) {
             return phantomJsJobResult.getContent();
-        }
-        else
-        {
+        } else {
             throw new Exception("PhantomJsJobResult is null");
         }
     }
@@ -909,8 +760,7 @@ abstract public class ProxyCollector extends Thread
      * @return the string
      * @throws Exception the exception
      */
-    protected String downloadPageWithPhantomJs(String url, String postParameters) throws Exception
-    {
+    protected String downloadPageWithPhantomJs(String url, String postParameters) throws Exception {
         return downloadPageWithPhantomJs(url, postParameters, new HashMap<String, String>(), false);
     }
 
@@ -924,23 +774,16 @@ abstract public class ProxyCollector extends Thread
      * @return the string
      * @throws Exception the exception
      */
-    protected String downloadPageWithPhantomJs(String url, String postParameters, HashMap<String, String> cookies, boolean sourceCode) throws Exception
-    {
+    protected String downloadPageWithPhantomJs(String url, String postParameters, HashMap<String, String> cookies, boolean sourceCode) throws Exception {
         PhantomJsJobResult phantomJsJobResult = downloadWithPhantomJs(url, postParameters, cookies);
-        if (phantomJsJobResult != null)
-        {
-            if (sourceCode)
-            {
+        if (phantomJsJobResult != null) {
+            if (sourceCode) {
                 return phantomJsJobResult.getSourceCode();
-            }
-            else
-            {
+            } else {
                 return phantomJsJobResult.getContent();
             }
 
-        }
-        else
-        {
+        } else {
             throw new Exception("PhantomJsJobResult is null");
         }
     }
@@ -952,52 +795,38 @@ abstract public class ProxyCollector extends Thread
      * @return the string
      * @throws Exception the exception
      */
-    protected String downloadPageSourceWithPhantomJs(String url) throws Exception
-    {
+    protected String downloadPageSourceWithPhantomJs(String url) throws Exception {
         return downloadPageWithPhantomJs(url, null, new HashMap<String, String>(), true);
     }
 
-    private PhantomJsJobResult downloadWithPhantomJs(String url) throws Exception
-    {
+    private PhantomJsJobResult downloadWithPhantomJs(String url) throws Exception {
         return downloadWithPhantomJs(url, null);
     }
 
-    private PhantomJsJobResult downloadWithPhantomJs(String url, String postParameters) throws Exception
-    {
+    private PhantomJsJobResult downloadWithPhantomJs(String url, String postParameters) throws Exception {
         return downloadWithPhantomJs(url, postParameters, new HashMap<String, String>());
     }
 
-    private PhantomJsJobResult downloadWithPhantomJs(String url, String postParameters, HashMap<String, String> cookies) throws Exception
-    {
-        try
-        {
+    private PhantomJsJobResult downloadWithPhantomJs(String url, String postParameters, HashMap<String, String> cookies) throws Exception {
+        try {
             PhantomJsJob phantomJsJob;
-            if (postParameters == null)
-            {
+            if (postParameters == null) {
                 phantomJsJob = phantomJsManager.addJob(url);
-            }
-            else
-            {
+            } else {
                 phantomJsJob = phantomJsManager.addJob(url, postParameters);
             }
             phantomJsJob.setCookies(cookies);
 
-            while (!phantomJsJob.isFinished())
-            {
+            while (!phantomJsJob.isFinished()) {
                 Thread.sleep(2000);
             }
 
-            if (phantomJsJob.isSuccessful())
-            {
+            if (phantomJsJob.isSuccessful()) {
                 return phantomJsJob.getPhantomJsJobResult();
-            }
-            else
-            {
+            } else {
                 throw phantomJsJob.getException();
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw e;
         }
     }

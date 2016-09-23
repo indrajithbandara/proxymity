@@ -13,8 +13,7 @@ import java.util.List;
 /**
  * The type Proxy collector manager.
  */
-public class ProxyCollectorManager extends Thread
-{
+public class ProxyCollectorManager extends Thread {
     /**
      * The Log.
      */
@@ -39,8 +38,7 @@ public class ProxyCollectorManager extends Thread
      * @param collectorParameters the collector parameters
      * @param useTor              the use tor
      */
-    public ProxyCollectorManager(CollectorParameters collectorParameters, boolean useTor)
-    {
+    public ProxyCollectorManager(CollectorParameters collectorParameters, boolean useTor) {
         this.collectorParameters = collectorParameters;
         this.phantomJsManager = new PhantomJsManager(useTor);
         this.phantomJsManager.start();
@@ -52,15 +50,12 @@ public class ProxyCollectorManager extends Thread
      *
      * @throws Exception the exception
      */
-    public ProxyCollectorManager() throws Exception
-    {
+    public ProxyCollectorManager() throws Exception {
         throw new Exception("Default constructor disabled");
     }
 
-    public void run()
-    {
-        try
-        {
+    public void run() {
+        try {
 
             List<ProxyCollector> collectors = new ArrayList<ProxyCollector>();
 
@@ -127,49 +122,38 @@ public class ProxyCollectorManager extends Thread
             //collectors.add(new SpyIpComCollector(collectorParameters));
 
             Collections.shuffle(collectors);
-            for (ProxyCollector collector : collectors)
-            {
+            for (ProxyCollector collector : collectors) {
                 collector.start();
             }
 
-            while (true)
-            {
+            while (true) {
                 Thread.sleep(15000);
-                for (ProxyCollector collector : collectors)
-                {
+                for (ProxyCollector collector : collectors) {
                     int collectorCount = collector.getProxies().size();
                     //log.info(collector.collectorName() + " gave me " + collectorCount);
                     collector.writeProxyInfoToDatabase();
                     updateCounts(collector.collectorName(), collectorCount);
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void updateCounts(String collectorName, int collectorCount)
-    {
+    private void updateCounts(String collectorName, int collectorCount) {
         setCollectorCount(collectorName, getExistingCount(collectorName) + collectorCount);
     }
 
-    private void setCollectorCount(String collectorName, int count)
-    {
+    private void setCollectorCount(String collectorName, int count) {
         counts.put(collectorName, Integer.toString(count));
     }
 
-    private int getExistingCount(String collectorName)
-    {
+    private int getExistingCount(String collectorName) {
         String existingCount = counts.get(collectorName);
         int existingCountInt = 0;
-        try
-        {
+        try {
             existingCountInt = Integer.parseInt(existingCount);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             //noop;
         }
         return existingCountInt;

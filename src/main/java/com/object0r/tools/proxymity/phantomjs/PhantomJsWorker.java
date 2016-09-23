@@ -24,8 +24,7 @@ import java.util.logging.Level;
 /**
  * The type Phantom js worker.
  */
-public class PhantomJsWorker extends Thread
-{
+public class PhantomJsWorker extends Thread {
     /**
      * The Driver.
      */
@@ -49,8 +48,7 @@ public class PhantomJsWorker extends Thread
      * @param phantomJsManager the phantom js manager
      * @param useTor           the use tor
      */
-    public PhantomJsWorker(PhantomJsManager phantomJsManager, boolean useTor)
-    {
+    public PhantomJsWorker(PhantomJsManager phantomJsManager, boolean useTor) {
         this.phantomJsManager = phantomJsManager;
         this.useTor = useTor;
         initializePhantom();
@@ -59,8 +57,7 @@ public class PhantomJsWorker extends Thread
     /**
      * Initialize phantom.
      */
-    public void initializePhantom()
-    {
+    public void initializePhantom() {
         java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.NoOpLog");
 
@@ -73,8 +70,7 @@ public class PhantomJsWorker extends Thread
                 // "--proxy=127.0.0.1:9050",
                 // "--proxy-type=socks5"
         };
-        if (useTor)
-        {
+        if (useTor) {
             phantomArgs = new String[]{
                     "--webdriver-loglevel=NONE",
                     // enable for tor.
@@ -84,8 +80,7 @@ public class PhantomJsWorker extends Thread
         }
         String userAgent = Utilities.getBrowserUserAgent();
 
-        if (OsHelper.isWindows())
-        {
+        if (OsHelper.isWindows()) {
             ((DesiredCapabilities) caps).setJavascriptEnabled(true);
             //((DesiredCapabilities) caps).setJavascriptEnabled(true);
             //((DesiredCapabilities) caps).setCapability("takesScreenshot", true);
@@ -98,9 +93,7 @@ public class PhantomJsWorker extends Thread
                     PhantomJSDriverService.PHANTOMJS_CLI_ARGS, phantomArgs
             );
             ((DesiredCapabilities) caps).setCapability(PhantomJSDriverService.PHANTOMJS_PAGE_SETTINGS_PREFIX + "userAgent", userAgent);
-        }
-        else
-        {
+        } else {
             ((DesiredCapabilities) caps).setJavascriptEnabled(true);
             //((DesiredCapabilities) caps).setCapability("takesScreenshot", true);
             ((DesiredCapabilities) caps).setCapability("phantomjs.content.settings.resourceTimeout", 3000);
@@ -117,20 +110,14 @@ public class PhantomJsWorker extends Thread
 
     }
 
-    public void run()
-    {
-        while (true)
-        {
+    public void run() {
+        while (true) {
 
             PhantomJsJob phantomJsJob = phantomJsManager.getNextJob();
-            while (phantomJsJob == null)
-            {
-                try
-                {
+            while (phantomJsJob == null) {
+                try {
                     Thread.sleep(2000);
-                }
-                catch (InterruptedException e)
-                {
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 phantomJsJob = phantomJsManager.getNextJob();
@@ -145,8 +132,7 @@ public class PhantomJsWorker extends Thread
      *
      * @param phantomJsJob the phantom js job
      */
-    public void processJob(PhantomJsJob phantomJsJob)
-    {
+    public void processJob(PhantomJsJob phantomJsJob) {
         processJob(phantomJsJob, 1);
     }
 
@@ -156,40 +142,30 @@ public class PhantomJsWorker extends Thread
      * @param phantomJsJob the phantom js job
      * @param count        the count
      */
-    public void processJob(PhantomJsJob phantomJsJob, int count)
-    {
-        try
-        {
-            try
-            {
+    public void processJob(PhantomJsJob phantomJsJob, int count) {
+        try {
+            try {
                 phantomJsJob.setStatusProcessing();
                 //TODO download with phantomjs
                 String url = phantomJsJob.getUrl();
-                try
-                {
-                    if (phantomJsJob.isRequestGet())
-                    {
+                try {
+                    if (phantomJsJob.isRequestGet()) {
                         driver.get(url);
 
-                        if (phantomJsJob.getCookies().size() > 0)
-                        {
-                            for (Map.Entry<String, String> entry : phantomJsJob.getCookies().entrySet())
-                            {
+                        if (phantomJsJob.getCookies().size() > 0) {
+                            for (Map.Entry<String, String> entry : phantomJsJob.getCookies().entrySet()) {
                                 Cookie ck = new Cookie(entry.getKey(), entry.getValue());
                                 driver.manage().addCookie(ck);
 
                             }
                             driver.get(url);
                         }
-                    }
-                    else if (phantomJsJob.isRequestPost())
-                    {
+                    } else if (phantomJsJob.isRequestPost()) {
                         HashMap<String, String> postParameters = phantomJsJob.getPostParameters();
                         String form = "<html><head></head><body><form id =\"form1\" action=\"" + phantomJsJob.getUrl() + "\" method=\"post\">\n" +
                                 "<input type=\"submit\" value=\"Submit\">";
 
-                        for (Map.Entry<String, String> entry : postParameters.entrySet())
-                        {
+                        for (Map.Entry<String, String> entry : postParameters.entrySet()) {
 
                             String key = entry.getKey();
                             String value = entry.getValue();
@@ -198,8 +174,7 @@ public class PhantomJsWorker extends Thread
                         }
                         form += "</form></body></html>";
 
-                        if (!new File("tmp").isDirectory())
-                        {
+                        if (!new File("tmp").isDirectory()) {
                             new File("tmp").mkdir();
                         }
                         String tmpFilename = "tmp/" + uuid + ".html";
@@ -209,10 +184,8 @@ public class PhantomJsWorker extends Thread
 
                         driver.get("file:///" + (new File(tmpFilename).getAbsolutePath()));
 
-                        if (phantomJsJob.getCookies().size() > 0)
-                        {
-                            for (Map.Entry<String, String> entry : phantomJsJob.getCookies().entrySet())
-                            {
+                        if (phantomJsJob.getCookies().size() > 0) {
+                            for (Map.Entry<String, String> entry : phantomJsJob.getCookies().entrySet()) {
                                 Cookie ck = new Cookie(entry.getKey(), entry.getValue());
                                 driver.manage().addCookie(ck);
 
@@ -223,9 +196,7 @@ public class PhantomJsWorker extends Thread
                         WebElement element = driver.findElement(By.id("form1"));
                         element.submit();
                     }
-                }
-                catch (org.openqa.selenium.TimeoutException e)
-                {
+                } catch (org.openqa.selenium.TimeoutException e) {
                     //We can ignore timeout Exception.
                         /*phantomJsJob.setStatusFailed();
                         phantomJsJob.setException(e);
@@ -245,23 +216,17 @@ public class PhantomJsWorker extends Thread
                 //String page = Utilities.readUrl(phantomJsJob.getUrl());
                 //phantomJsJob.setContent(page);
                 phantomJsJob.setStatusSuccess();
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 //if (e.toString().contains("The driver server has unexpectedly died"))
                 // {
-                try
-                {
+                try {
                     driver.quit();
-                }
-                catch (Exception ee)
-                {
+                } catch (Exception ee) {
                     System.out.println(ee);
                 }
                 initializePhantom();
                 //}
-                if (count < 2)
-                {
+                if (count < 2) {
                     processJob(phantomJsJob, count + 1);
                     return;
                 }
@@ -269,9 +234,7 @@ public class PhantomJsWorker extends Thread
                 phantomJsJob.setException(e);
                 e.printStackTrace();
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -3,8 +3,7 @@ package com.object0r.tools.proxymity.phantomjs;
 /**
  * The type Phantom js job result.
  */
-public class PhantomJsJobResult
-{
+public class PhantomJsJobResult {
     /**
      * The Source code.
      */
@@ -19,8 +18,7 @@ public class PhantomJsJobResult
      *
      * @return the source code
      */
-    public String getSourceCode()
-    {
+    public String getSourceCode() {
         return sourceCode;
     }
 
@@ -29,8 +27,7 @@ public class PhantomJsJobResult
      *
      * @param sourceCode the source code
      */
-    public void setSourceCode(String sourceCode)
-    {
+    public void setSourceCode(String sourceCode) {
         this.sourceCode = sourceCode;
     }
 
@@ -39,8 +36,7 @@ public class PhantomJsJobResult
      *
      * @return the content
      */
-    public String getContent()
-    {
+    public String getContent() {
         return content;
     }
 
@@ -49,8 +45,7 @@ public class PhantomJsJobResult
      *
      * @param content the content
      */
-    public void setContent(String content)
-    {
+    public void setContent(String content) {
         this.content = content;
     }
 }

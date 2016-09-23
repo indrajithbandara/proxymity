@@ -12,35 +12,28 @@ import java.util.regex.Pattern;
 /**
  * The type Spys ru collector.
  */
-public class spysRuCollector extends ProxyCollector
-{
+public class spysRuCollector extends ProxyCollector {
     /**
      * Instantiates a new Spys ru collector.
      *
      * @param collectorParameters the collector parameters
      */
 //TODO post will get more results.
-    public spysRuCollector(CollectorParameters collectorParameters)
-    {
+    public spysRuCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
-            try
-            {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
+            try {
                 String page = anonReadUrl("http://spys.ru/en/proxy-by-country/");
 
                 Pattern p = Pattern.compile("href='.*?'");
                 Matcher m = p.matcher(page);
-                while (m.find())
-                {
-                    String line = m.group().replace("href='","").replace("'","");
-                    if (!line.contains("http://"))
-                    {
-                        line = "http://spys.ru"+line;
+                while (m.find()) {
+                    String line = m.group().replace("href='", "").replace("'", "");
+                    if (!line.contains("http://")) {
+                        line = "http://spys.ru" + line;
                         processPage(line);
                     }
                     //System.out.println(line);
@@ -55,35 +48,28 @@ public class spysRuCollector extends ProxyCollector
                 processPage("http://spys.ru/en/non-anonymous-proxy-list/");
 
 
+            } catch (Exception e) {
+                e.printStackTrace();
+                ;
             }
-            catch (Exception e)
-            {
-                e.printStackTrace();;
-            }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "spys.ru";
     }
 
-    private void processPage(String url)
-    {
-        for (int i = 1; i<10; i++)
-        {
-            try
-            {
+    private void processPage(String url) {
+        for (int i = 1; i < 10; i++) {
+            try {
                 url = url.replace("__page__", new Integer(i).toString());
                 //TODO anonread with post, and read it with phantom.
-                String page = downloadPageWithPhantomJs(url,"xpp=3&xf1=0&xf2=0&xf4=0");
-                Pattern p = Pattern.compile("\\d++\\.\\d++\\.\\d++\\.\\d++:\\d+ .*? ",Pattern.DOTALL);
+                String page = downloadPageWithPhantomJs(url, "xpp=3&xf1=0&xf2=0&xf4=0");
+                Pattern p = Pattern.compile("\\d++\\.\\d++\\.\\d++\\.\\d++:\\d+ .*? ", Pattern.DOTALL);
 
                 Matcher m = p.matcher(page);
 
@@ -97,22 +83,18 @@ public class spysRuCollector extends ProxyCollector
                     proxyInfo.setHost(ip);
                     proxyInfo.setPort(port);
                     proxyInfo.setType(ProxyInfo.PROXY_TYPES_HTTP);
-                    if (type.equals("SOCKS5"))
-                    {
+                    if (type.equals("SOCKS5")) {
                         //System.out.println(type);
                         proxyInfo.setType(ProxyInfo.PROXY_TYPES_SOCKS5);
                     }
                     addProxy(proxyInfo);
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
                 //System.exit(0);
             }
             //remove this. (true)
-            if (!url.contains("__page__") || true)
-            {
+            if (!url.contains("__page__") || true) {
                 //System.out.println("!page" + url);
                 break;
             }

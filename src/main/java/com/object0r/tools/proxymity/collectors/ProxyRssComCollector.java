@@ -13,24 +13,20 @@ import java.util.zip.GZIPInputStream;
 /**
  * The type Proxy rss com collector.
  */
-public class ProxyRssComCollector extends ProxyCollector
-{
+public class ProxyRssComCollector extends ProxyCollector {
     /**
      * Instantiates a new Proxy rss com collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public ProxyRssComCollector(CollectorParameters collectorParameters)
-    {
+    public ProxyRssComCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
             String gzFile = "tmp/proxyrss.com.gz";
-            String outFile ="tmp/proxyrss.com.txt";
+            String outFile = "tmp/proxyrss.com.txt";
             Utilities.downloadFile("http://www.proxyrss.com/proxylists/all.gz", gzFile);
 
             FileInputStream fis = new FileInputStream(gzFile);
@@ -39,7 +35,7 @@ public class ProxyRssComCollector extends ProxyCollector
             byte[] buffer = new byte[1024];
             int len;
             StringBuffer sb = new StringBuffer();
-            while((len = gis.read(buffer)) != -1){
+            while ((len = gis.read(buffer)) != -1) {
                 //sb.append(buffer);
                 fos.write(buffer, 0, len);
             }
@@ -47,17 +43,14 @@ public class ProxyRssComCollector extends ProxyCollector
             gis.close();
             fos.close();
             genericParsingOfText(Utilities.readFile(outFile), ProxyInfo.PROXY_TYPES_HTTP);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "proxyrss.com";
     }
 }

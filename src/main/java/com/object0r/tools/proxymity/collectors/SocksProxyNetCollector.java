@@ -12,8 +12,7 @@ import java.util.regex.Pattern;
 /**
  * The type Socks proxy net collector.
  */
-public class SocksProxyNetCollector extends ProxyCollector
-{
+public class SocksProxyNetCollector extends ProxyCollector {
 
 
     /**
@@ -21,28 +20,22 @@ public class SocksProxyNetCollector extends ProxyCollector
      *
      * @param collectorParameters the collector parameters
      */
-    public SocksProxyNetCollector(CollectorParameters collectorParameters)
-    {
+    public SocksProxyNetCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
             String page = Utilities.readUrl("http://www.socks-proxy.net/");
             Pattern p = Pattern.compile("<tr><td>.*?</td></tr>");
             Matcher m = p.matcher(page);
-            while (m.find())
-            {
-                try
-                {
+            while (m.find()) {
+                try {
                     String line = m.group();
                     Pattern pp = Pattern.compile("<tr><td>.*</td><td>\\d*</td>");
                     Matcher mm = pp.matcher(line);
-                    if (mm.find())
-                    {
+                    if (mm.find()) {
                         line = mm.group().trim();
                         String ip = Utilities.cut("<tr><td>", "<", line);
                         String port = Utilities.cut("</td><td>", "<", line);
@@ -56,25 +49,19 @@ public class SocksProxyNetCollector extends ProxyCollector
                         addProxy(proxyInfo);
                         ;
                     }
-                }
-
-                catch (Exception ee)
-                {
+                } catch (Exception ee) {
                     ee.printStackTrace();
                 }
                 //System.exit(0);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "socks-proxy.net";
     }
 }

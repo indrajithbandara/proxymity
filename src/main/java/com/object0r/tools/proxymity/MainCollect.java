@@ -8,29 +8,23 @@ import java.util.Properties;
 /**
  * The type Main collect.
  */
-public class MainCollect
-{
+public class MainCollect {
 
     /**
      * The entry point of application.
      *
      * @param args the input arguments
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         RecurringProcessHelper.checkAndRun("proxymity");
 
         Properties properties = Main.readProperties();
 
-        try
-        {
-            if (properties.getProperty("exitAfterMinutes")!=null)
-            {
-                RecurringProcessHelper.exitAfterSeconds(Integer.parseInt(properties.getProperty("exitAfterMinutes"))*60);
+        try {
+            if (properties.getProperty("exitAfterMinutes") != null) {
+                RecurringProcessHelper.exitAfterSeconds(Integer.parseInt(properties.getProperty("exitAfterMinutes")) * 60);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

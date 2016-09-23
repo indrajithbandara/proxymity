@@ -3,8 +3,7 @@ package com.object0r.tools.proxymity.datatypes;
 /**
  * The type Proxy info.
  */
-public class ProxyInfo
-{
+public class ProxyInfo {
     /**
      * The constant PROXY_TYPES_SOCKS4.
      */
@@ -27,15 +26,14 @@ public class ProxyInfo
     private String port;
     private String type;
     private boolean checkOnlyOnce = false;
-    private int priority=0;
+    private int priority = 0;
 
     /**
      * Gets priority.
      *
      * @return the priority
      */
-    public int getPriority()
-    {
+    public int getPriority() {
         return priority;
     }
 
@@ -44,8 +42,7 @@ public class ProxyInfo
      *
      * @param priority the priority
      */
-    public void setPriority(int priority)
-    {
+    public void setPriority(int priority) {
         this.priority = priority;
     }
 
@@ -54,8 +51,7 @@ public class ProxyInfo
      *
      * @return the id
      */
-    public String getId()
-    {
+    public String getId() {
         return id;
     }
 
@@ -64,8 +60,7 @@ public class ProxyInfo
      *
      * @param id the id
      */
-    public void setId(String id)
-    {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -74,8 +69,7 @@ public class ProxyInfo
      *
      * @return the host
      */
-    public String getHost()
-    {
+    public String getHost() {
         return host;
     }
 
@@ -84,8 +78,7 @@ public class ProxyInfo
      *
      * @param host the host
      */
-    public void setHost(String host)
-    {
+    public void setHost(String host) {
         this.host = host;
     }
 
@@ -94,8 +87,7 @@ public class ProxyInfo
      *
      * @return the port
      */
-    public String getPort()
-    {
+    public String getPort() {
         return port;
     }
 
@@ -104,8 +96,7 @@ public class ProxyInfo
      *
      * @param port the port
      */
-    public void setPort(String port)
-    {
+    public void setPort(String port) {
         this.port = port;
     }
 
@@ -114,35 +105,8 @@ public class ProxyInfo
      *
      * @return the type
      */
-    public String getType()
-    {
+    public String getType() {
         return type;
-    }
-
-    /**
-     * Unset check only once.
-     */
-    public void unsetCheckOnlyOnce()
-    {
-        this.checkOnlyOnce = true;
-    }
-
-    /**
-     * Sets check only once.
-     */
-    public void setCheckOnlyOnce()
-    {
-        this.checkOnlyOnce = true;
-    }
-
-    /**
-     * Is check only once boolean.
-     *
-     * @return the boolean
-     */
-    public boolean isCheckOnlyOnce()
-    {
-        return checkOnlyOnce;
     }
 
     /**
@@ -151,22 +115,42 @@ public class ProxyInfo
      * @param type the type
      * @throws Exception the exception
      */
-    public void setType(String type) throws Exception
-    {
+    public void setType(String type) throws Exception {
         if (
                 !type.equals(ProxyInfo.PROXY_TYPES_HTTP) &&
-                !type.equals(ProxyInfo.PROXY_TYPES_HTTPS) &&
-                !type.equals(ProxyInfo.PROXY_TYPES_SOCKS4) &&
-                !type.equals(ProxyInfo.PROXY_TYPES_SOCKS5)
-                )
-        {
+                        !type.equals(ProxyInfo.PROXY_TYPES_HTTPS) &&
+                        !type.equals(ProxyInfo.PROXY_TYPES_SOCKS4) &&
+                        !type.equals(ProxyInfo.PROXY_TYPES_SOCKS5)
+                ) {
             throw new Exception("Unknown Proxy Type");
         }
         this.type = type;
     }
 
-    public String toString()
-    {
-        return host + ":"+port+"/"+type;
+    /**
+     * Unset check only once.
+     */
+    public void unsetCheckOnlyOnce() {
+        this.checkOnlyOnce = true;
+    }
+
+    /**
+     * Sets check only once.
+     */
+    public void setCheckOnlyOnce() {
+        this.checkOnlyOnce = true;
+    }
+
+    /**
+     * Is check only once boolean.
+     *
+     * @return the boolean
+     */
+    public boolean isCheckOnlyOnce() {
+        return checkOnlyOnce;
+    }
+
+    public String toString() {
+        return host + ":" + port + "/" + type;
     }
 }

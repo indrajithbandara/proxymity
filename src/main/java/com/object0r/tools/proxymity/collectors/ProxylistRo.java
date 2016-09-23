@@ -9,40 +9,32 @@ import java.util.Vector;
 /**
  * The type Proxylist ro.
  */
-public class ProxylistRo extends ProxyCollector
-{
+public class ProxylistRo extends ProxyCollector {
     /**
      * Instantiates a new Proxylist ro.
      *
      * @param collectorParameters the collector parameters
      */
-    public ProxylistRo(CollectorParameters collectorParameters)
-    {
+    public ProxylistRo(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
 
-            for (int i = 0; i<100; i++)
-            {
-                String page = this.downloadPageWithPhantomJs("http://www.proxylist.ro/search-free-proxy.php?country=&port=&anon=&ssl=&start="+i);
+            for (int i = 0; i < 100; i++) {
+                String page = this.downloadPageWithPhantomJs("http://www.proxylist.ro/search-free-proxy.php?country=&port=&anon=&ssl=&start=" + i);
                 this.genericParsingOfUrlSpace(page, ProxyInfo.PROXY_TYPES_HTTP);
 
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "proxylist.ro";
     }
 }

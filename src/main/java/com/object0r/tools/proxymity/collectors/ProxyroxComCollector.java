@@ -14,41 +14,30 @@ import java.util.regex.Pattern;
 /**
  * The type Proxyrox com collector.
  */
-public class ProxyroxComCollector extends ProxyCollector
-{
+public class ProxyroxComCollector extends ProxyCollector {
     /**
      * Instantiates a new Proxyrox com collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public ProxyroxComCollector(CollectorParameters collectorParameters)
-    {
+    public ProxyroxComCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
-            for (int i = 1; i < 200; i++)
-            {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
+            for (int i = 1; i < 200; i++) {
                 String page = "";
-                try
-                {
-                    while (true)
-                    {
+                try {
+                    while (true) {
 
-                        try
-                        {
+                        try {
                             page = anonReadUrl("https://proxyrox.com/?p=" + i);
-                        }
-                        catch (IOException e)
-                        {
+                        } catch (IOException e) {
                             //System.out.println("ProxyRox.com fail");
                             continue;
                         }
-                        if (!page.contains("<title>Proxy Rox |"))
-                        {
+                        if (!page.contains("<title>Proxy Rox |")) {
                             System.out.println("Bad Proxy Rox stuff.");
                             System.out.println(page);
                             continue;
@@ -57,20 +46,15 @@ public class ProxyroxComCollector extends ProxyCollector
                         break;
                     }
 
-                }
-
-                catch (FileNotFoundException e)
-                {
+                } catch (FileNotFoundException e) {
                     //e.printStackTrace();
                     return getProxies();
                 }
 
                 Pattern p = Pattern.compile("\\d+\\.\\d+\\.\\d+\\.\\d+:\\d+");
                 Matcher m = p.matcher(page);
-                while (m.find())
-                {
-                    try
-                    {
+                while (m.find()) {
+                    try {
                         String line = m.group();
                         //System.out.println(line);
                         StringTokenizer st = new StringTokenizer(line, ":");
@@ -83,25 +67,19 @@ public class ProxyroxComCollector extends ProxyCollector
                         proxyInfo.setPort(port);
                         proxyInfo.setType(ProxyInfo.PROXY_TYPES_HTTP);
                         addProxy(proxyInfo);
-                    }
-
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "proxyrox.com";
     }
 }

@@ -9,49 +9,38 @@ import java.util.Vector;
 /**
  * The type Nn time com collector.
  */
-public class NnTimeComCollector extends ProxyCollector
-{
+public class NnTimeComCollector extends ProxyCollector {
     /**
      * Instantiates a new Nn time com collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public NnTimeComCollector(CollectorParameters collectorParameters)
-    {
+    public NnTimeComCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
-            for (int i = 1; i< 31; i++)
-            {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
+            for (int i = 1; i < 31; i++) {
                 String url = "";
-                if (i<10)
-                {
-                    url = "http://nntime.com/proxy-list-0"+i+".htm";
-                }
-                else
-                {
-                    url = "http://nntime.com/proxy-list-"+i+".htm";
+                if (i < 10) {
+                    url = "http://nntime.com/proxy-list-0" + i + ".htm";
+                } else {
+                    url = "http://nntime.com/proxy-list-" + i + ".htm";
                 }
 
                 String page = this.downloadPageWithPhantomJs(url);
 
                 genericParsingOfText(page, ProxyInfo.PROXY_TYPES_HTTP);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "nntime.com";
     }
 }

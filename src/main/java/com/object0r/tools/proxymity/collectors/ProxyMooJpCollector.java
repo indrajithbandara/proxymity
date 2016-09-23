@@ -14,24 +14,19 @@ import java.util.regex.Pattern;
 /**
  * The type Proxy moo jp collector.
  */
-public class ProxyMooJpCollector extends ProxyCollector
-{
+public class ProxyMooJpCollector extends ProxyCollector {
     /**
      * Instantiates a new Proxy moo jp collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public ProxyMooJpCollector(CollectorParameters collectorParameters)
-    {
+    public ProxyMooJpCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
-            for (int i = 2; i < 200; i++)
-            {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
+            for (int i = 2; i < 200; i++) {
                 boolean foundAtLeastOne = false;
 
                 String url = "http://proxy.moo.jp/?page=" + i;
@@ -49,17 +44,14 @@ public class ProxyMooJpCollector extends ProxyCollector
                 page = Utilities.cut("<div class=\"page\">", "</tbody></table>", page);
                 Pattern p = Pattern.compile("<tr class=\".*?</tr>", Pattern.DOTALL);
                 Matcher m = p.matcher(page);
-                while (m.find())
-                {
+                while (m.find()) {
                     String line = m.group();
 
-                    if (line.contains("<tr class=\"Caption\">"))
-                    {
+                    if (line.contains("<tr class=\"Caption\">")) {
                         continue;
                     }
                     //System.out.println(line);
-                    if (!line.contains("IPDecode(\""))
-                    {
+                    if (!line.contains("IPDecode(\"")) {
                         continue;
                     }
                     String ip = Utilities.cut("IPDecode(\"", "\")</sc", line);
@@ -78,12 +70,9 @@ public class ProxyMooJpCollector extends ProxyCollector
                     Integer.parseInt(port);
                     ProxyInfo proxyInfo = new ProxyInfo();
 
-                    if (type.equals("HTTPS"))
-                    {
+                    if (type.equals("HTTPS")) {
                         proxyInfo.setType(ProxyInfo.PROXY_TYPES_HTTPS);
-                    }
-                    else
-                    {
+                    } else {
                         proxyInfo.setType(ProxyInfo.PROXY_TYPES_HTTP);
                     }
 
@@ -93,21 +82,15 @@ public class ProxyMooJpCollector extends ProxyCollector
                     addProxy(proxyInfo);
                 }
                 Thread.sleep(2000);
-                if (!foundAtLeastOne)
-                {
+                if (!foundAtLeastOne) {
                     return getProxies();
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-            try
-            {
+            try {
                 Thread.sleep(60000);
-            }
-            catch (Exception we)
-            {
+            } catch (Exception we) {
                 we.printStackTrace();
                 ;
             }
@@ -118,8 +101,7 @@ public class ProxyMooJpCollector extends ProxyCollector
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "proxy.moo.jp";
     }
 }

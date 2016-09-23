@@ -8,8 +8,7 @@ import java.sql.Connection;
 /**
  * The type Collector parameters.
  */
-public class CollectorParameters
-{
+public class CollectorParameters {
     /**
      * The Db connection.
      */
@@ -50,8 +49,7 @@ public class CollectorParameters
      *
      * @return the db connection
      */
-    public Connection getDbConnection()
-    {
+    public Connection getDbConnection() {
         return dbConnection;
     }
 
@@ -60,8 +58,7 @@ public class CollectorParameters
      *
      * @param dbConnection the db connection
      */
-    public void setDbConnection(Connection dbConnection)
-    {
+    public void setDbConnection(Connection dbConnection) {
         this.dbConnection = dbConnection;
     }
 
@@ -70,8 +67,7 @@ public class CollectorParameters
      *
      * @return the boolean
      */
-    public boolean isUseTor()
-    {
+    public boolean isUseTor() {
         return useTor;
     }
 
@@ -80,8 +76,7 @@ public class CollectorParameters
      *
      * @param useTor the use tor
      */
-    public void setUseTor(boolean useTor)
-    {
+    public void setUseTor(boolean useTor) {
         this.useTor = useTor;
     }
 
@@ -90,8 +85,7 @@ public class CollectorParameters
      *
      * @return the phantom js manager
      */
-    public PhantomJsManager getPhantomJsManager()
-    {
+    public PhantomJsManager getPhantomJsManager() {
         return phantomJsManager;
     }
 
@@ -100,8 +94,7 @@ public class CollectorParameters
      *
      * @param phantomJsManager the phantom js manager
      */
-    public void setPhantomJsManager(PhantomJsManager phantomJsManager)
-    {
+    public void setPhantomJsManager(PhantomJsManager phantomJsManager) {
         this.phantomJsManager = phantomJsManager;
     }
 }

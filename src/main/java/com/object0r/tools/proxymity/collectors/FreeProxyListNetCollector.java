@@ -12,8 +12,7 @@ import java.util.regex.Pattern;
 /**
  * The type Free proxy list net collector.
  */
-public class FreeProxyListNetCollector extends ProxyCollector
-{
+public class FreeProxyListNetCollector extends ProxyCollector {
 
 
     /**
@@ -21,30 +20,24 @@ public class FreeProxyListNetCollector extends ProxyCollector
      *
      * @param collectorParameters the collector parameters
      */
-    public FreeProxyListNetCollector(CollectorParameters collectorParameters)
-    {
+    public FreeProxyListNetCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
             String page = Utilities.readUrl("https://free-proxy-list.net/");
             Pattern p = Pattern.compile("<tr><td>.*?</td></tr>");
             Matcher m = p.matcher(page);
-            while (m.find())
-            {
-                try
-                {
+            while (m.find()) {
+                try {
 
 
                     String line = m.group();
                     Pattern pp = Pattern.compile("<tr><td>.*</td><td>\\d*</td>");
                     Matcher mm = pp.matcher(line);
-                    if (mm.find())
-                    {
+                    if (mm.find()) {
                         line = mm.group().trim();
                         String ip = Utilities.cut("<tr><td>", "<", line);
                         String port = Utilities.cut("</td><td>", "<", line);
@@ -57,24 +50,19 @@ public class FreeProxyListNetCollector extends ProxyCollector
                         proxyInfo.setType(ProxyInfo.PROXY_TYPES_HTTP);
                         addProxy(proxyInfo);
                     }
-                }
-                catch (Exception ee)
-                {
+                } catch (Exception ee) {
                     ee.printStackTrace();
                 }
                 //System.exit(0);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "free-proxy-list.net";
     }
 }

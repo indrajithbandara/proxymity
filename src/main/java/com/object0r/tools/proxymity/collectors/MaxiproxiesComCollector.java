@@ -9,35 +9,28 @@ import java.util.Vector;
 /**
  * The type Maxiproxies com collector.
  */
-public class MaxiproxiesComCollector extends ProxyCollector
-{
+public class MaxiproxiesComCollector extends ProxyCollector {
     /**
      * Instantiates a new Maxiproxies com collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public MaxiproxiesComCollector(CollectorParameters collectorParameters)
-    {
+    public MaxiproxiesComCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
             genericParsingOfUrl("http://maxiproxies.com/feed/atom/", ProxyInfo.PROXY_TYPES_HTTP);
             genericParsingOfUrl("http://maxiproxies.com/proxy-lists/feed/", ProxyInfo.PROXY_TYPES_HTTP);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "maxiproxies.com";
     }
 }

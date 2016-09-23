@@ -12,24 +12,20 @@ import java.util.regex.Pattern;
 /**
  * The type Ultra proxies com collector.
  */
-public class UltraProxiesComCollector extends ProxyCollector
-{
+public class UltraProxiesComCollector extends ProxyCollector {
     /**
      * Instantiates a new Ultra proxies com collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public UltraProxiesComCollector(CollectorParameters collectorParameters)
-    {
+    public UltraProxiesComCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
         //initializePhantom();
         //initializePhantom();
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
             /*driver.get("http://www.ultraproxies.com/");
             WebElement webElement = driver.findElement(By.tagName("body"));
             String page = webElement.getText();*/
@@ -40,9 +36,8 @@ public class UltraProxiesComCollector extends ProxyCollector
             Pattern p = Pattern.compile("\\d+\\.\\d+\\.\\d+\\.\\d+: \\d+");
             Matcher m = p.matcher(page);
 
-            while (m.find())
-            {
-                String line = m.group().replace(" ","");
+            while (m.find()) {
+                String line = m.group().replace(" ", "");
                 StringTokenizer st = new StringTokenizer(line, ":");
                 String ip = st.nextToken();
                 String port = st.nextToken();
@@ -54,17 +49,14 @@ public class UltraProxiesComCollector extends ProxyCollector
                 addProxy(proxyInfo);
                 //System.out.println(line);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "ultraproxies.com";
     }
 }

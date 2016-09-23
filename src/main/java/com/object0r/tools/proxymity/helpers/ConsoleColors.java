@@ -3,8 +3,7 @@ package com.object0r.tools.proxymity.helpers;
 /**
  * The type Console colors.
  */
-public class ConsoleColors
-{
+public class ConsoleColors {
     /**
      * The constant RESET.
      */
@@ -49,9 +48,8 @@ public class ConsoleColors
      * @param text  the text
      * @param color the color
      */
-    public static void printColor(String text, String color)
-    {
-        System.out.println(color+text+ConsoleColors.RESET);
+    public static void printColor(String text, String color) {
+        System.out.println(color + text + ConsoleColors.RESET);
     }
 
     /**
@@ -59,8 +57,7 @@ public class ConsoleColors
      *
      * @param text the text
      */
-    public static void printRed(String text)
-    {
+    public static void printRed(String text) {
         printColor(text, ConsoleColors.RED);
     }
 
@@ -69,8 +66,7 @@ public class ConsoleColors
      *
      * @param text the text
      */
-    public static void printBlue(String text)
-    {
+    public static void printBlue(String text) {
         printColor(text, ConsoleColors.BLUE);
     }
 
@@ -79,8 +75,7 @@ public class ConsoleColors
      *
      * @param text the text
      */
-    public static void printCyan(String text)
-    {
+    public static void printCyan(String text) {
         printColor(text, ConsoleColors.CYAN);
     }
 
@@ -89,8 +84,7 @@ public class ConsoleColors
      *
      * @param text the text
      */
-    public static void printGreen(String text)
-    {
+    public static void printGreen(String text) {
         printColor(text, ConsoleColors.GREEN);
     }
 }

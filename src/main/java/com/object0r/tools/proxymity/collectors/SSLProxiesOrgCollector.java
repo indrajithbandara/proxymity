@@ -12,29 +12,24 @@ import java.util.regex.Pattern;
 /**
  * The type Ssl proxies org collector.
  */
-public class SSLProxiesOrgCollector extends ProxyCollector
-{
+public class SSLProxiesOrgCollector extends ProxyCollector {
     /**
      * Instantiates a new Ssl proxies org collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public SSLProxiesOrgCollector(CollectorParameters collectorParameters)
-    {
+    public SSLProxiesOrgCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
-    public Vector<ProxyInfo> collectProxies()
-    {
 
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+
+        try {
             String page = Utilities.readUrl("http://www.sslproxies.org/");
             Pattern p = Pattern.compile("<tr><td>.*?</td></tr>");
             Matcher m = p.matcher(page);
-            while (m.find())
-            {
-                try
-                {
+            while (m.find()) {
+                try {
                     String line = m.group();
                     Pattern pp = Pattern.compile("<tr><td>.*</td><td>\\d*</td>");
                     Matcher mm = pp.matcher(line);
@@ -49,24 +44,19 @@ public class SSLProxiesOrgCollector extends ProxyCollector
                         proxyInfo.setType(ProxyInfo.PROXY_TYPES_HTTPS);
                         addProxy(proxyInfo);
                     }
-                }
-                catch (Exception ee)
-                {
+                } catch (Exception ee) {
                     ee.printStackTrace();
                 }
                 //System.exit(0);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "sslproxies.org";
     }
 }

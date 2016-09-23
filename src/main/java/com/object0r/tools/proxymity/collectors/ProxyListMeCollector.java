@@ -11,39 +11,32 @@ import java.util.regex.Pattern;
 /**
  * The type Proxy list me collector.
  */
-public class ProxyListMeCollector extends ProxyCollector
-{
+public class ProxyListMeCollector extends ProxyCollector {
     /**
      * Instantiates a new Proxy list me collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public ProxyListMeCollector(CollectorParameters collectorParameters)
-    {
+    public ProxyListMeCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
 
-            for (int i = 0; i<150; i++)
-            {
+            for (int i = 0; i < 150; i++) {
 
-                Vector<String> rows = extractTableRows("http://proxylist.me/proxys/index/"+(i*20));
+                Vector<String> rows = extractTableRows("http://proxylist.me/proxys/index/" + (i * 20));
                 boolean foundAtLeastOne = false;
-                for (String line : rows)
-                {
+                for (String line : rows) {
                     Pattern p = Pattern.compile("\\d+\\.\\d+\\.\\d+\\.\\d+");
                     Matcher m = p.matcher(line);
-                    if (m.find())
-                    {
+                    if (m.find()) {
                         String ip = m.group();
                         Pattern pp = Pattern.compile("<td>\\d+</td>");
                         Matcher mm = pp.matcher(line);
                         mm.find();
-                        String port = mm.group().replace("<td>","").replace("</td>","");
+                        String port = mm.group().replace("<td>", "").replace("</td>", "");
                         Integer.parseInt(port);
                         ProxyInfo proxyInfo = new ProxyInfo();
                         proxyInfo.setHost(ip);
@@ -53,22 +46,18 @@ public class ProxyListMeCollector extends ProxyCollector
                         foundAtLeastOne = true;
                     }
                 }
-                if (!foundAtLeastOne)
-                {
+                if (!foundAtLeastOne) {
                     return getProxies();
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "proxylist.me";
     }
 }

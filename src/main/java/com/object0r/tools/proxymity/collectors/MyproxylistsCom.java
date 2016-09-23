@@ -13,27 +13,22 @@ import java.util.regex.Pattern;
 /**
  * The type Myproxylists com.
  */
-public class MyproxylistsCom extends ProxyCollector
-{
+public class MyproxylistsCom extends ProxyCollector {
     /**
      * Instantiates a new Myproxylists com.
      *
      * @param collectorParameters the collector parameters
      */
-    public MyproxylistsCom(CollectorParameters collectorParameters)
-    {
+    public MyproxylistsCom(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
             String page = Utilities.readUrl("http://myproxylists.com/free-proxy-list");
             Pattern p = Pattern.compile("\\d+\\.\\d+\\.\\d+\\.\\d+:\\d+");
             Matcher m = p.matcher(page);
-            while (m.find())
-            {
+            while (m.find()) {
                 String line = m.group();
                 StringTokenizer st = new StringTokenizer(line, ":");
                 ProxyInfo proxyInfo = new ProxyInfo();
@@ -47,10 +42,9 @@ public class MyproxylistsCom extends ProxyCollector
             }
 
             page = Utilities.readUrl("http://myproxylists.com/socks-proxy-lists");
-             p = Pattern.compile("\\d+\\.\\d+\\.\\d+\\.\\d+:\\d+");
-             m = p.matcher(page);
-            while (m.find())
-            {
+            p = Pattern.compile("\\d+\\.\\d+\\.\\d+\\.\\d+:\\d+");
+            m = p.matcher(page);
+            while (m.find()) {
                 String line = m.group();
                 StringTokenizer st = new StringTokenizer(line, ":");
                 ProxyInfo proxyInfo = new ProxyInfo();
@@ -62,17 +56,14 @@ public class MyproxylistsCom extends ProxyCollector
                 proxyInfo.setType(ProxyInfo.PROXY_TYPES_SOCKS5);
                 addProxy(proxyInfo);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "myproxylists.com";
     }
 }

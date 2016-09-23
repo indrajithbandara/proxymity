@@ -9,34 +9,27 @@ import java.util.Vector;
 /**
  * The type Free proxy lists daily blogspot in collector.
  */
-public class freeProxyListsDailyBlogspotInCollector extends ProxyCollector
-{
+public class freeProxyListsDailyBlogspotInCollector extends ProxyCollector {
     /**
      * Instantiates a new Free proxy lists daily blogspot in collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public freeProxyListsDailyBlogspotInCollector(CollectorParameters collectorParameters)
-    {
+    public freeProxyListsDailyBlogspotInCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
             genericParsingOfUrl("http://freeproxylistsdaily.blogspot.in/feeds/posts/default", ProxyInfo.PROXY_TYPES_HTTP);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "freeproxylistsdaily.blogspot.in";
     }
 }

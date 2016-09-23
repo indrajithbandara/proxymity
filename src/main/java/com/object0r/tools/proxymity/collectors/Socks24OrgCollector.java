@@ -13,51 +13,41 @@ import java.util.regex.Pattern;
 /**
  * The type Socks 24 org collector.
  */
-public class Socks24OrgCollector extends ProxyCollector
-{
+public class Socks24OrgCollector extends ProxyCollector {
     /**
      * Instantiates a new Socks 24 org collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public Socks24OrgCollector(CollectorParameters collectorParameters)
-    {
+    public Socks24OrgCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
             doUrl("http://socksproxylist24.blogspot.com.cy/search?&max-results=40&start=0&by-date=false");
             doUrl("http://www.socks24.org/search?&max-results=40&start=0&by-date=false");
             doUrl("http://sslproxies24.blogspot.com.cy/search?&max-results=40&start=0&by-date=false");
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "socks24.org";
     }
 
     private void doUrl(String initialUrl) {
-        try
-        {
+        try {
             String page = Utilities.readUrl(initialUrl);
             Pattern p = Pattern.compile("<h3 class='post-title entry-title' itemprop='name'>.*?</h3>", Pattern.DOTALL);
             Matcher m = p.matcher(page);
 
-            while (m.find())
-            {
-                try
-                {
+            while (m.find()) {
+                try {
                     String line = m.group();
                     String url = Utilities.cut("<a href='", "'", line);
                     page = Utilities.readUrl(url);
@@ -79,9 +69,7 @@ public class Socks24OrgCollector extends ProxyCollector
                     e.printStackTrace();
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

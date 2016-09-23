@@ -9,37 +9,30 @@ import java.util.Vector;
 /**
  * The type The proxy list com collector.
  */
-public class theProxyListComCollector extends ProxyCollector
-{
+public class theProxyListComCollector extends ProxyCollector {
     /**
      * Instantiates a new The proxy list com collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public theProxyListComCollector(CollectorParameters collectorParameters)
-    {
+    public theProxyListComCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
             genericParsingOfUrl("http://the-proxy-list.com/proxies-by-type/socks-proxies/", ProxyInfo.PROXY_TYPES_SOCKS5);
             genericParsingOfUrl("http://the-proxy-list.com/proxies-by-type/socks-proxies/", ProxyInfo.PROXY_TYPES_SOCKS4);
             genericParsingOfUrl("http://the-proxy-list.com/proxies-by-type/high-anonymous-elite-proxies-l1/", ProxyInfo.PROXY_TYPES_HTTP);
             genericParsingOfUrl("http://the-proxy-list.com/proxies-by-type/anonymous-proxies-l2/", ProxyInfo.PROXY_TYPES_HTTP);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "the-proxy-list.com";
     }
 }

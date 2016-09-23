@@ -14,78 +14,57 @@ import java.util.regex.Pattern;
 /**
  * The type Proxy list org collector.
  */
-public class ProxyListOrgCollector extends ProxyCollector
-{
+public class ProxyListOrgCollector extends ProxyCollector {
     /**
      * Instantiates a new Proxy list org collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public ProxyListOrgCollector(CollectorParameters collectorParameters)
-    {
+    public ProxyListOrgCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
 
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
+    public Vector<ProxyInfo> collectProxies() {
 
-        try
-        {
-            for (int i = 0; i < 15; i++)
-            {
+        try {
+            for (int i = 0; i < 15; i++) {
                 String page = Utilities.readUrl("https://proxy-list.org/english/index.php?p=" + i);
 
                 Pattern p = Pattern.compile("<ul>.*?</ul>", Pattern.DOTALL);
                 Matcher m = p.matcher(page);
-                while (m.find())
-                {
-                    try
-                    {
+                while (m.find()) {
+                    try {
                         String line = m.group();
                         //System.out.println(line);
                         String urlEncoded = Utilities.cut("text/javascript\">Proxy('", "')</script>", line).trim();
                         String url = new String(Base64.getDecoder().decode(urlEncoded.getBytes()));
                         String ip = "";
                         String port = "";
-                        if (url.contains(":"))
-                        {
+                        if (url.contains(":")) {
                             StringTokenizer st = new StringTokenizer(url, ":");
                             ip = st.nextToken();
                             port = st.nextToken();
-                            try
-                            {
+                            try {
                                 Integer.parseInt(port);
-                            }
-                            catch (Exception e)
-                            {
+                            } catch (Exception e) {
                                 continue;
                             }
 
                             String type = Utilities.cut("</script></li>", "</li", line);
-                            if (type.toLowerCase().contains(">https<"))
-                            {
+                            if (type.toLowerCase().contains(">https<")) {
                                 type = "HTTPS";
-                            }
-                            else if (type.toLowerCase().contains(">http<"))
-                            {
+                            } else if (type.toLowerCase().contains(">http<")) {
                                 type = "HTTP";
-                            }
-                            else
-                            {
+                            } else {
                                 type = "HTTP";
                             }
                             ProxyInfo proxyInfo = new ProxyInfo();
-                            if (type.equals("HTTPS"))
-                            {
+                            if (type.equals("HTTPS")) {
                                 proxyInfo.setType(ProxyInfo.PROXY_TYPES_HTTPS);
-                            }
-                            else if (type.equals("HTTP"))
-                            {
+                            } else if (type.equals("HTTP")) {
                                 proxyInfo.setType(ProxyInfo.PROXY_TYPES_HTTP);
-                            }
-                            else
-                            {
+                            } else {
                                 continue;
                             }
 
@@ -93,24 +72,19 @@ public class ProxyListOrgCollector extends ProxyCollector
                             proxyInfo.setPort(port);
                             addProxy(proxyInfo);
                         }
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "proxy-list.org";
     }
 }

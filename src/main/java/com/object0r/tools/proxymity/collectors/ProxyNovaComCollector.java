@@ -13,40 +13,33 @@ import java.util.regex.Pattern;
 /**
  * The type Proxy nova com collector.
  */
-public class ProxyNovaComCollector extends ProxyCollector
-{
+public class ProxyNovaComCollector extends ProxyCollector {
     /**
      * Instantiates a new Proxy nova com collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public ProxyNovaComCollector(CollectorParameters collectorParameters)
-    {
+    public ProxyNovaComCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
             String codes[] = getCountryCodes();
 
-            for (String code: codes)
-            {
-                String page = Utilities.readUrl("http://www.proxynova.com/proxy-server-list/country-"+code+"/");
-                Pattern p = Pattern.compile("<tr>.*?</tr>",Pattern.DOTALL);
+            for (String code : codes) {
+                String page = Utilities.readUrl("http://www.proxynova.com/proxy-server-list/country-" + code + "/");
+                Pattern p = Pattern.compile("<tr>.*?</tr>", Pattern.DOTALL);
 
                 Matcher m = p.matcher(page);
 
-                while (m.find())
-                {
+                while (m.find()) {
                     String line = m.group();
-                    if (line.contains("</span><span>"))
-                    {
-                        line=line.replace("</span><span>","");
-                        String ip = Utilities.cut("<span>","</span>",line);
+                    if (line.contains("</span><span>")) {
+                        line = line.replace("</span><span>", "");
+                        String ip = Utilities.cut("<span>", "</span>", line);
 
-                        Pattern pp = Pattern.compile("<td align=\"left\">.*?</td>",Pattern.DOTALL);
+                        Pattern pp = Pattern.compile("<td align=\"left\">.*?</td>", Pattern.DOTALL);
                         Matcher mm = pp.matcher(line);
                         mm.find();
                         mm.find();
@@ -64,17 +57,14 @@ public class ProxyNovaComCollector extends ProxyCollector
                     }
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "proxynova.com";
     }
 
@@ -83,11 +73,10 @@ public class ProxyNovaComCollector extends ProxyCollector
      *
      * @return the string [ ]
      */
-    public String[] getCountryCodes()
-    {
+    public String[] getCountryCodes() {
         String[] countries = new String[103];
 
-        String codes =  "ae\n" +
+        String codes = "ae\n" +
                 "al\n" +
                 "am\n" +
                 "ar\n" +
@@ -193,10 +182,9 @@ public class ProxyNovaComCollector extends ProxyCollector
 
         Scanner sc = new Scanner(codes);
 
-        int i =0;
+        int i = 0;
 
-        while (sc.hasNext())
-        {
+        while (sc.hasNext()) {
             countries[i++] = sc.next();
         }
 

@@ -6,8 +6,7 @@ import java.util.StringTokenizer;
 /**
  * The type Phantom js job.
  */
-public class PhantomJsJob
-{
+public class PhantomJsJob {
     /**
      * The constant STATUS_PENDING.
      */
@@ -37,7 +36,14 @@ public class PhantomJsJob
      * The Element type.
      */
     static String elementType = null;
-
+    /**
+     * The Cookies.
+     */
+    public HashMap<String, String> cookies = new HashMap<String, String>();
+    /**
+     * The Post parameters.
+     */
+    public HashMap<String, String> postParameters = new HashMap<String, String>();
     /**
      * The Url.
      */
@@ -60,64 +66,11 @@ public class PhantomJsJob
     Exception exception;
 
     /**
-     * The Cookies.
-     */
-    public HashMap<String, String> cookies = new HashMap<String, String>();
-
-    /**
-     * The Post parameters.
-     */
-    public HashMap<String, String> postParameters = new HashMap<String, String>();
-
-    /**
-     * Add post parameter.
-     *
-     * @param key   the key
-     * @param value the value
-     */
-    public void addPostParameter(String key, String value)
-    {
-        postParameters.put(key, value);
-    }
-
-    /**
-     * Add cookie.
-     *
-     * @param key   the key
-     * @param value the value
-     */
-    public void addCookie(String key, String value)
-    {
-        cookies.put(key, value);
-    }
-
-    /**
-     * Gets post parameters.
-     *
-     * @return the post parameters
-     */
-    public HashMap<String, String> getPostParameters()
-    {
-        return postParameters;
-    }
-
-    /**
-     * Gets cookies.
-     *
-     * @return the cookies
-     */
-    public HashMap<String, String> getCookies()
-    {
-        return cookies;
-    }
-
-    /**
      * Instantiates a new Phantom js job.
      *
      * @param url the url
      */
-    public PhantomJsJob(String url)
-    {
+    public PhantomJsJob(String url) {
         this.setUrl(url);
     }
 
@@ -127,15 +80,12 @@ public class PhantomJsJob
      * @param url      the url
      * @param postBody the post body
      */
-    public PhantomJsJob(String url, String postBody)
-    {
+    public PhantomJsJob(String url, String postBody) {
         this.setUrl(url);
         StringTokenizer st = new StringTokenizer(postBody, "&");
-        while (st.hasMoreTokens())
-        {
+        while (st.hasMoreTokens()) {
             String line = st.nextToken();
-            if (line.contains("="))
-            {
+            if (line.contains("=")) {
                 StringTokenizer st2 = new StringTokenizer(line, "=");
                 addPostParameter(st2.nextToken(), st2.nextToken());
             }
@@ -144,12 +94,58 @@ public class PhantomJsJob
     }
 
     /**
+     * Add post parameter.
+     *
+     * @param key   the key
+     * @param value the value
+     */
+    public void addPostParameter(String key, String value) {
+        postParameters.put(key, value);
+    }
+
+    /**
+     * Add cookie.
+     *
+     * @param key   the key
+     * @param value the value
+     */
+    public void addCookie(String key, String value) {
+        cookies.put(key, value);
+    }
+
+    /**
+     * Gets post parameters.
+     *
+     * @return the post parameters
+     */
+    public HashMap<String, String> getPostParameters() {
+        return postParameters;
+    }
+
+    /**
+     * Gets cookies.
+     *
+     * @return the cookies
+     */
+    public HashMap<String, String> getCookies() {
+        return cookies;
+    }
+
+    /**
+     * Sets cookies.
+     *
+     * @param cookies the cookies
+     */
+    public void setCookies(HashMap<String, String> cookies) {
+        this.cookies = cookies;
+    }
+
+    /**
      * Gets url.
      *
      * @return the url
      */
-    public String getUrl()
-    {
+    public String getUrl() {
         return url;
     }
 
@@ -158,8 +154,7 @@ public class PhantomJsJob
      *
      * @param url the url
      */
-    public void setUrl(String url)
-    {
+    public void setUrl(String url) {
         this.url = url;
     }
 
@@ -168,8 +163,7 @@ public class PhantomJsJob
      *
      * @return the phantom js job result
      */
-    public PhantomJsJobResult getPhantomJsJobResult()
-    {
+    public PhantomJsJobResult getPhantomJsJobResult() {
         return phantomJsJobResult;
     }
 
@@ -178,24 +172,21 @@ public class PhantomJsJob
      *
      * @param phantomJsJobResult the phantom js job result
      */
-    public void setPhantomJsJobResult(PhantomJsJobResult phantomJsJobResult)
-    {
+    public void setPhantomJsJobResult(PhantomJsJobResult phantomJsJobResult) {
         this.phantomJsJobResult = phantomJsJobResult;
     }
 
     /**
      * Sets request post.
      */
-    public void setRequestPost()
-    {
+    public void setRequestPost() {
         this.request = REQUEST_ACTION_POST;
     }
 
     /**
      * Sets request get.
      */
-    public void setRequestGet()
-    {
+    public void setRequestGet() {
         this.request = REQUEST_ACTION_GET;
     }
 
@@ -204,8 +195,7 @@ public class PhantomJsJob
      *
      * @return the boolean
      */
-    public boolean isRequestPost()
-    {
+    public boolean isRequestPost() {
         return this.request == REQUEST_ACTION_POST;
     }
 
@@ -214,8 +204,7 @@ public class PhantomJsJob
      *
      * @return the boolean
      */
-    public boolean isRequestGet()
-    {
+    public boolean isRequestGet() {
         return this.request == REQUEST_ACTION_GET;
     }
 
@@ -224,8 +213,7 @@ public class PhantomJsJob
      *
      * @return the boolean
      */
-    public boolean isPending()
-    {
+    public boolean isPending() {
         return status.equals(STATUS_PENDING);
     }
 
@@ -234,8 +222,7 @@ public class PhantomJsJob
      *
      * @return the boolean
      */
-    public boolean isFinished()
-    {
+    public boolean isFinished() {
         return status.equals(STATUS_SUCCESS) || status.equals(STATUS_FAILED);
     }
 
@@ -244,40 +231,35 @@ public class PhantomJsJob
      *
      * @return the boolean
      */
-    public boolean isSuccessful()
-    {
+    public boolean isSuccessful() {
         return status.equals(STATUS_SUCCESS);
     }
 
     /**
      * Sets status failed.
      */
-    public void setStatusFailed()
-    {
+    public void setStatusFailed() {
         this.status = STATUS_FAILED;
     }
 
     /**
      * Sets status success.
      */
-    public void setStatusSuccess()
-    {
+    public void setStatusSuccess() {
         this.status = STATUS_SUCCESS;
     }
 
     /**
      * Sets status pending.
      */
-    public void setStatusPending()
-    {
+    public void setStatusPending() {
         this.status = STATUS_PENDING;
     }
 
     /**
      * Sets status processing.
      */
-    public void setStatusProcessing()
-    {
+    public void setStatusProcessing() {
         this.status = STATUS_PROCESSING;
     }
 
@@ -286,8 +268,7 @@ public class PhantomJsJob
      *
      * @return the exception
      */
-    public Exception getException()
-    {
+    public Exception getException() {
         return exception;
     }
 
@@ -296,18 +277,7 @@ public class PhantomJsJob
      *
      * @param exception the exception
      */
-    public void setException(Exception exception)
-    {
+    public void setException(Exception exception) {
         this.exception = exception;
-    }
-
-    /**
-     * Sets cookies.
-     *
-     * @param cookies the cookies
-     */
-    public void setCookies(HashMap<String, String> cookies)
-    {
-        this.cookies = cookies;
     }
 }

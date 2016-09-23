@@ -10,29 +10,24 @@ import java.util.Vector;
 /**
  * The type Us proxy org collector.
  */
-public class UsProxyOrgCollector extends ProxyCollector
-{
+public class UsProxyOrgCollector extends ProxyCollector {
     /**
      * Instantiates a new Us proxy org collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public UsProxyOrgCollector(CollectorParameters collectorParameters)
-    {
+    public UsProxyOrgCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
             //String page = Utilities.readUrl("http://www.us-proxy.org/");
             Vector<String> rows = extractTableRows("http://www.us-proxy.org/");
-            for (String row : rows)
-            {
+            for (String row : rows) {
                 //System.out.println(row);
-                String ip = Utilities.cut("<tr><td>","<",row);
-                String port = Utilities.cut("</td><td>","<",row);
+                String ip = Utilities.cut("<tr><td>", "<", row);
+                String port = Utilities.cut("</td><td>", "<", row);
                 if (port.contains(">")) {
                     continue;
                 }
@@ -45,17 +40,14 @@ public class UsProxyOrgCollector extends ProxyCollector
                 addProxy(proxyInfo);
 
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "us-proxy.org";
     }
 

@@ -14,8 +14,7 @@ import java.util.regex.Pattern;
 /**
  * The type Samair ru collector.
  */
-public class SamairRuCollector extends ProxyCollector
-{
+public class SamairRuCollector extends ProxyCollector {
 
 
     /**
@@ -23,122 +22,95 @@ public class SamairRuCollector extends ProxyCollector
      *
      * @param collectorParameters the collector parameters
      */
-    public SamairRuCollector(CollectorParameters collectorParameters)
-    {
+    public SamairRuCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
 
-    public Vector<ProxyInfo> collectProxies()
-    {
+    public Vector<ProxyInfo> collectProxies() {
 
-        try
-        {
-            for (int i = 1 ; i < 100; i++)
-            {
+        try {
+            for (int i = 1; i < 100; i++) {
                 String pageNumber = "";
                 pageNumber = Integer.toString(i);
 
-                if (pageNumber.length() == 1)
-                {
-                    pageNumber= "0"+pageNumber;
+                if (pageNumber.length() == 1) {
+                    pageNumber = "0" + pageNumber;
                 }
-                String page="";
-                try
-                {
-                    page  = Utilities.readUrl("http://www.samair.ru/proxy/proxy-"+pageNumber+".htm");
-                }
-                catch (FileNotFoundException e)
-                {
+                String page = "";
+                try {
+                    page = Utilities.readUrl("http://www.samair.ru/proxy/proxy-" + pageNumber + ".htm");
+                } catch (FileNotFoundException e) {
                     return getProxies();
                 }
                 String css = readCss(page, "http://www.samair.ru");
-                Vector<ProxyInfo> tempProxies  = extractProxies(page, css);
-                for (ProxyInfo proxyInfo: tempProxies)
-                {
+                Vector<ProxyInfo> tempProxies = extractProxies(page, css);
+                for (ProxyInfo proxyInfo : tempProxies) {
                     proxyInfo.setType(ProxyInfo.PROXY_TYPES_HTTP);
                     addProxy(proxyInfo);
                 }
             }
 
-            for (int i = 1 ; i < 100; i++)
-            {
+            for (int i = 1; i < 100; i++) {
                 String pageNumber = "";
                 pageNumber = Integer.toString(i);
 
-                if (pageNumber.length() == 1)
-                {
-                    pageNumber= "0"+pageNumber;
+                if (pageNumber.length() == 1) {
+                    pageNumber = "0" + pageNumber;
                 }
-                String page="";
-                try
-                {
-                    page  = Utilities.readUrl("http://www.samair.ru/proxy/socks"+pageNumber+".htm");
-                }
-                catch (FileNotFoundException e)
-                {
+                String page = "";
+                try {
+                    page = Utilities.readUrl("http://www.samair.ru/proxy/socks" + pageNumber + ".htm");
+                } catch (FileNotFoundException e) {
                     return getProxies();
                 }
                 String css = readCss(page, "http://www.samair.ru");
 
-                Vector<ProxyInfo> tempProxies  = extractProxies(page, css);
+                Vector<ProxyInfo> tempProxies = extractProxies(page, css);
 
-                for (ProxyInfo proxyInfo: tempProxies)
-                {
+                for (ProxyInfo proxyInfo : tempProxies) {
                     proxyInfo.setType(ProxyInfo.PROXY_TYPES_SOCKS5);
                     //System.out.println(proxyInfo);
                     addProxy(proxyInfo);
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "samair.ru";
     }
 
-    private Vector<ProxyInfo> extractProxies(String page, String css)
-    {
+    private Vector<ProxyInfo> extractProxies(String page, String css) {
         Vector<ProxyInfo> proxies = new Vector<ProxyInfo>();
-        try
-        {
+        try {
             Pattern p = Pattern.compile("<tr>.*?</tr>");
             Matcher m = p.matcher(page);
 
-            while (m.find())
-            {
-                try
-                {
+            while (m.find()) {
+                try {
                     String line = m.group();
                     /*System.out.println(line);
                     System.exit(0);*/
-                    String ip=null;
-                    int portInt=0;
-                    if (line.contains("<span class="))
-                    {
-                        line = Utilities.cut("<span class=","</span",line);
-                        ip = Utilities.cut("\">",":",line);
-                        String portClass = Utilities.cut("\"","\"",line);
+                    String ip = null;
+                    int portInt = 0;
+                    if (line.contains("<span class=")) {
+                        line = Utilities.cut("<span class=", "</span", line);
+                        ip = Utilities.cut("\">", ":", line);
+                        String portClass = Utilities.cut("\"", "\"", line);
                         portInt = getPortFromClass(css, portClass);
-                    }
-                    else
-                    {
-                        if (line.contains(":") && line.contains("<tr><td>"))
-                        {
+                    } else {
+                        if (line.contains(":") && line.contains("<tr><td>")) {
                             ip = Utilities.cut("<tr><td>", ":", line);
                             String portString = Utilities.cut(":", "<", line);
                             portInt = Integer.parseInt(portString);
                         }
                     }
-                    if (ip!= null)
-                    {
+                    if (ip != null) {
                         ProxyInfo proxyInfo = new ProxyInfo();
                         proxyInfo.setHost(ip);
                         proxyInfo.setPort(Integer.toString(portInt));
@@ -146,36 +118,28 @@ public class SamairRuCollector extends ProxyCollector
                         proxies.add(proxyInfo);
                     }
 
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return proxies;
     }
 
-    private int getPortFromClass(String css, String portClass) throws Exception
-    {
-        try
-        {
+    private int getPortFromClass(String css, String portClass) throws Exception {
+        try {
             Scanner sc = new Scanner(css);
             while (sc.hasNext()) {
                 String line = sc.nextLine();
                 if (line.contains(portClass)) {
-                    String port = Utilities.cut("content:\"","\"",line);
+                    String port = Utilities.cut("content:\"", "\"", line);
                     return Integer.parseInt(port);
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             //e.printStackTrace();
             throw new Exception("ExportPortFromCssProblem");
         }
@@ -183,25 +147,19 @@ public class SamairRuCollector extends ProxyCollector
 
     }
 
-    private String readCss(String page, String append)
-    {
+    private String readCss(String page, String append) {
         String css = "";
-        try
-        {
+        try {
             Pattern p = Pattern.compile("<link rel=\"stylesheet\" href=\"[^\"]*\"");
             Matcher m = p.matcher(page);
-            while (m.find())
-            {
-                String url = m.group().replace("<link rel=\"stylesheet\" href=\"","").replace("\"","");
-                if (!url.contains("http://"))
-                {
+            while (m.find()) {
+                String url = m.group().replace("<link rel=\"stylesheet\" href=\"", "").replace("\"", "");
+                if (!url.contains("http://")) {
                     url = append + url;
                 }
                 css += Utilities.readUrl(url);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return css;

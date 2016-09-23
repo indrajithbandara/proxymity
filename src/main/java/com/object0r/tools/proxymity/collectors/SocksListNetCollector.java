@@ -12,8 +12,7 @@ import java.util.regex.Pattern;
 /**
  * The type Socks list net collector.
  */
-public class SocksListNetCollector extends ProxyCollector
-{
+public class SocksListNetCollector extends ProxyCollector {
 
 
     /**
@@ -21,29 +20,23 @@ public class SocksListNetCollector extends ProxyCollector
      *
      * @param collectorParameters the collector parameters
      */
-    public SocksListNetCollector(CollectorParameters collectorParameters)
-    {
+    public SocksListNetCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
-            for (int i = 1; i<50; i++)
-            {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
+            for (int i = 1; i < 50; i++) {
                 /*driver.get("http://sockslist.net/list/proxy-socks-5-list/"+i+"#proxylist");
                 WebElement element = driver.findElement(By.tagName("body"));
                 String page = element.getText();*/
 
-                String page = downloadPageWithPhantomJs("http://sockslist.net/list/proxy-socks-5-list/"+i+"#proxylist");
+                String page = downloadPageWithPhantomJs("http://sockslist.net/list/proxy-socks-5-list/" + i + "#proxylist");
                 Pattern p = Pattern.compile("\\d+\\.\\d+\\.\\d+\\.\\d+ \\d+", Pattern.DOTALL);
                 Matcher m = p.matcher(page);
                 boolean foundAtLeastOne = false;
-                while (m.find())
-                {
-                    try
-                    {
+                while (m.find()) {
+                    try {
                         String line = m.group();
                         //System.out.println(line);
                         ProxyInfo proxyInfo = new ProxyInfo();
@@ -58,42 +51,32 @@ public class SocksListNetCollector extends ProxyCollector
                         proxyInfo.setPort(port);
                         proxyInfo.setType(ProxyInfo.PROXY_TYPES_SOCKS5);
                         addProxy(proxyInfo);
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-                if (!foundAtLeastOne)
-                {
+                if (!foundAtLeastOne) {
                     break;
                 }
             }
 
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
 
-
-
-        try
-        {
-            for (int i = 1; i<150; i++)
-            {
+        try {
+            for (int i = 1; i < 150; i++) {
                 /*driver.get("http://proxyhttp.net/free-list/anonymous-server-hide-ip-address/"+i+"#proxylist");
                 WebElement element = driver.findElement(By.tagName("body"));
                 String page = element.getText();*/
-                String page = "http://proxyhttp.net/free-list/anonymous-server-hide-ip-address/"+i+"#proxylist";
+                String page = "http://proxyhttp.net/free-list/anonymous-server-hide-ip-address/" + i + "#proxylist";
 
                 Pattern p = Pattern.compile("\\d+\\.\\d+\\.\\d+\\.\\d+ \\d+", Pattern.DOTALL);
                 Matcher m = p.matcher(page);
                 boolean foundAtLeastOne = false;
-                while (m.find())
-                {
+                while (m.find()) {
                     foundAtLeastOne = true;
                     String line = m.group();
                     //System.out.println(line);
@@ -106,14 +89,11 @@ public class SocksListNetCollector extends ProxyCollector
                     proxyInfo.setType(ProxyInfo.PROXY_TYPES_HTTP);
                     addProxy(proxyInfo);
                 }
-                if (!foundAtLeastOne)
-                {
+                if (!foundAtLeastOne) {
                     break;
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -124,8 +104,7 @@ public class SocksListNetCollector extends ProxyCollector
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "sockslist.net";
     }
 }

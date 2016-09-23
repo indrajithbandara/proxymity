@@ -12,33 +12,27 @@ import java.util.regex.Pattern;
 /**
  * The type Fiftyna 50 net collector.
  */
-public class fiftyna50NetCollector extends ProxyCollector
-{
+public class fiftyna50NetCollector extends ProxyCollector {
     /**
      * Instantiates a new Fiftyna 50 net collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public fiftyna50NetCollector(CollectorParameters collectorParameters)
-    {
+    public fiftyna50NetCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
             String page = Utilities.readUrl("http://proxy50-50.blogspot.in/");
-            Pattern p = Pattern.compile("<tr >.*?</tr>",Pattern.DOTALL);
+            Pattern p = Pattern.compile("<tr >.*?</tr>", Pattern.DOTALL);
             Matcher m = p.matcher(page);
-            while (m.find())
-            {
+            while (m.find()) {
                 String line = m.group();
                 //System.out.println(line);
-                if (line.contains("confirmation=http://hideip.me/ip"))
-                {
-                    String ip = Utilities.cut("&host=","&", line);
-                    String port = Utilities.cut("&port=","&", line);
+                if (line.contains("confirmation=http://hideip.me/ip")) {
+                    String ip = Utilities.cut("&host=", "&", line);
+                    String port = Utilities.cut("&port=", "&", line);
                     Integer.parseInt(port);
                     ProxyInfo proxyInfo = new ProxyInfo();
 
@@ -48,17 +42,14 @@ public class fiftyna50NetCollector extends ProxyCollector
                     addProxy(proxyInfo);
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "proxy50-50.blogspot.in";
     }
 }

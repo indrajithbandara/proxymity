@@ -12,41 +12,35 @@ import java.util.regex.Pattern;
 /**
  * The type Proxy listy com.
  */
-public class ProxyListyCom extends ProxyCollector
-{
+public class ProxyListyCom extends ProxyCollector {
     /**
      * Instantiates a new Proxy listy com.
      *
      * @param collectorParameters the collector parameters
      */
-    public ProxyListyCom(CollectorParameters collectorParameters)
-    {
+    public ProxyListyCom(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
 
 
-            for (int i = 1; i<150; i++)
-            {
+            for (int i = 1; i < 150; i++) {
                 //TODO disabled. Last time I checked last checked was 5 months ago. Inactive Website
-                if (true) { return getProxies(); }
-                String page = Utilities.readUrl("http://www.proxylisty.com/ip-proxylist-"+i);
-                Pattern p = Pattern.compile("<tr>.*?</tr>",Pattern.DOTALL);
+                if (true) {
+                    return getProxies();
+                }
+                String page = Utilities.readUrl("http://www.proxylisty.com/ip-proxylist-" + i);
+                Pattern p = Pattern.compile("<tr>.*?</tr>", Pattern.DOTALL);
                 Matcher m = p.matcher(page);
                 boolean foundAtLeastOne = false;
-                while (m.find())
-                {
+                while (m.find()) {
                     String line = m.group();
                     Pattern pp = Pattern.compile("\\d+\\.\\d+\\.\\d+\\.\\d+");
                     Matcher mm = pp.matcher(line);
-                    if (mm.find())
-                    {
-                        try
-                        {
+                    if (mm.find()) {
+                        try {
                             foundAtLeastOne = true;
                             String ip = mm.group();
                             //System.out.println("Ip: " + ip);
@@ -57,29 +51,23 @@ public class ProxyListyCom extends ProxyCollector
                             proxyInfo.setHost(ip);
                             proxyInfo.setType(ProxyInfo.PROXY_TYPES_HTTP);
                             addProxy(proxyInfo);
-                        }
-                        catch (Exception e)
-                        {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }
-                if (!foundAtLeastOne)
-                {
+                if (!foundAtLeastOne) {
                     return getProxies();
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "proxylisty.com";
     }
 }

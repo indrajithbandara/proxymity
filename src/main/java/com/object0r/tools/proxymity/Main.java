@@ -12,16 +12,14 @@ import java.util.Properties;
 /**
  * The type Main.
  */
-public class Main
-{
+public class Main {
 
     /**
      * The entry point of application.
      *
      * @param args the input arguments
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         String log4jConfPath = "log4j.properties";
         PropertyConfigurator.configure(log4jConfPath);
         RecurringProcessHelper.checkAndRun("proxymity");
@@ -29,15 +27,11 @@ public class Main
         Properties properties = readProperties();
 
 
-        try
-        {
-            if (properties.getProperty("exitAfterMinutes")!=null)
-            {
-                RecurringProcessHelper.exitAfterSeconds(Integer.parseInt(properties.getProperty("exitAfterMinutes"))*60);
+        try {
+            if (properties.getProperty("exitAfterMinutes") != null) {
+                RecurringProcessHelper.exitAfterSeconds(Integer.parseInt(properties.getProperty("exitAfterMinutes")) * 60);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -54,8 +48,7 @@ public class Main
      *
      * @return the properties
      */
-    static Properties readProperties()
-    {
+    static Properties readProperties() {
         Properties prop = new Properties();
         InputStream input = null;
 

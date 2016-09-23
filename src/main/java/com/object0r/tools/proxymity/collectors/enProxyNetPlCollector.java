@@ -13,28 +13,23 @@ import java.util.regex.Pattern;
 /**
  * The type En proxy net pl collector.
  */
-public class enProxyNetPlCollector extends ProxyCollector
-{
+public class enProxyNetPlCollector extends ProxyCollector {
     /**
      * Instantiates a new En proxy net pl collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public enProxyNetPlCollector(CollectorParameters collectorParameters)
-    {
+    public enProxyNetPlCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
             String page = Utilities.readUrl("http://en.proxy.net.pl/fresh.html");
             Pattern p = Pattern.compile("\\d+\\.\\d+\\.\\d+\\.\\d+:\\d+");
             Matcher m = p.matcher(page);
 
-            while (m.find())
-            {
+            while (m.find()) {
                 String line = m.group();
                 //System.out.println(line);
                 StringTokenizer st = new StringTokenizer(line, ":");
@@ -47,17 +42,14 @@ public class enProxyNetPlCollector extends ProxyCollector
                 proxyInfo.setType(ProxyInfo.PROXY_TYPES_HTTP);
                 addProxy(proxyInfo);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "en.proxy.net.pl";
     }
 }

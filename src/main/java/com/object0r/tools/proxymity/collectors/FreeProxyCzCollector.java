@@ -13,34 +13,26 @@ import java.util.regex.Pattern;
 /**
  * The type Free proxy cz collector.
  */
-public class FreeProxyCzCollector extends ProxyCollector
-{
+public class FreeProxyCzCollector extends ProxyCollector {
     /**
      * Instantiates a new Free proxy cz collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public FreeProxyCzCollector(CollectorParameters collectorParameters)
-    {
+    public FreeProxyCzCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
-            for (int i = 1; i < 500; i++)
-            {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
+            for (int i = 1; i < 500; i++) {
 
                 String url = "http://free-proxy.cz/en/proxylist/main/" + i;
                 String page = "";
-                try
-                {
+                try {
                     //page = anonReadUrl(url);
-                    page= readUrl(url,false);
-                }
-                catch (Exception e)
-                {
+                    page = readUrl(url, false);
+                } catch (Exception e) {
                     //System.out.println("free-proxy.cz failed: " + url + " "+e.toString());
                     i--;
                     continue;
@@ -51,13 +43,10 @@ public class FreeProxyCzCollector extends ProxyCollector
                 Pattern p = Pattern.compile("<tr>.*?</tr>", Pattern.DOTALL);
                 Matcher m = p.matcher(page);
                 boolean foundAtLeastOne = false;
-                while (m.find())
-                {
+                while (m.find()) {
                     String line = m.group();
-                    if (line.contains("document.write(Base64"))
-                    {
-                        try
-                        {
+                    if (line.contains("document.write(Base64")) {
+                        try {
                             foundAtLeastOne = true;
                             //System.out.println(line);
                             String type = Utilities.cut("</script></span></td><td><small>", "<", line);
@@ -76,50 +65,35 @@ public class FreeProxyCzCollector extends ProxyCollector
                             proxyInfo.setPort(port);
 
                             proxyInfo.setType(ProxyInfo.PROXY_TYPES_HTTP);
-                            if (type.equals("HTTPS"))
-                            {
+                            if (type.equals("HTTPS")) {
                                 proxyInfo.setType(ProxyInfo.PROXY_TYPES_HTTPS);
-                            }
-                            else if (type.equals("HTTP"))
-                            {
+                            } else if (type.equals("HTTP")) {
                                 proxyInfo.setType(ProxyInfo.PROXY_TYPES_HTTP);
-                            }
-                            else if (type.equals("SOCKS5"))
-                            {
+                            } else if (type.equals("SOCKS5")) {
                                 proxyInfo.setType(ProxyInfo.PROXY_TYPES_SOCKS5);
-                            }
-                            else if (type.equals("SOCKS4"))
-                            {
+                            } else if (type.equals("SOCKS4")) {
                                 proxyInfo.setType(ProxyInfo.PROXY_TYPES_SOCKS4);
                             }
 
                             Integer.parseInt(port);
                             addProxy(proxyInfo);
-                        }
-                        catch (Exception e)
-                        {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                         //System.exit(0);
                     }
                 }
 
-                if (!foundAtLeastOne)
-                {
+                if (!foundAtLeastOne) {
                     return getProxies();
                 }
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
 
             e.printStackTrace();
-            try
-            {
+            try {
 
-            }
-            catch (Exception ee)
-            {
+            } catch (Exception ee) {
 
             }
         }
@@ -127,8 +101,7 @@ public class FreeProxyCzCollector extends ProxyCollector
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "free-proxy.cz";
     }
 }

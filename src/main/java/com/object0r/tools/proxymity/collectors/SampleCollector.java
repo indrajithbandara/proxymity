@@ -9,38 +9,31 @@ import java.util.Vector;
 /**
  * The type Sample collector.
  */
-public class SampleCollector extends ProxyCollector
-{
+public class SampleCollector extends ProxyCollector {
     /**
      * Instantiates a new Sample collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public SampleCollector(CollectorParameters collectorParameters)
-    {
+    public SampleCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
 
             /*String page = downloadPageWithPhantomJs("http://spys.ru/free-proxy-list/CN/","xpp=3&xf1=0&xf2=0&xf4=0");
             System.out.println(page);
             System.exit(0);*/
             genericParsingOfUrl("http://www.blackhatunderground.net/forum/buy-sell-trade-blackhat-marketplace/50-000-new-proxies-every-day!-worldwide-usa-elite-socks-%2850kproxies-com%29/90/", ProxyInfo.PROXY_TYPES_HTTP);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "blackhatunderground.net";
     }
 }

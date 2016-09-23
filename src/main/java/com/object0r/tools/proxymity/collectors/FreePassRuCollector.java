@@ -11,29 +11,24 @@ import java.util.regex.Pattern;
 /**
  * The type Free pass ru collector.
  */
-public class FreePassRuCollector extends ProxyCollector
-{
+public class FreePassRuCollector extends ProxyCollector {
     /**
      * Instantiates a new Free pass ru collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public FreePassRuCollector(CollectorParameters collectorParameters)
-    {
+    public FreePassRuCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
 
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
+    public Vector<ProxyInfo> collectProxies() {
+        try {
             String page = persistentAnonReadUrl("http://free-pass.ru/forum/79", 50);
 
             Pattern p = Pattern.compile("/forum/79-\\d+-\\d+");
             Matcher m = p.matcher(page);
 
-            while (m.find())
-            {
+            while (m.find()) {
 
                 String url = "http://free-pass.ru" + m.group();
                 String page2 = persistentAnonReadUrl(url, 50);
@@ -44,11 +39,8 @@ public class FreePassRuCollector extends ProxyCollector
                 Thread.sleep(30000);
             }
 
-        }
-        catch (Exception e)
-        {
-            if (e.toString().contains("IOException: Server returned HTTP response code: 500 "))
-            {
+        } catch (Exception e) {
+            if (e.toString().contains("IOException: Server returned HTTP response code: 500 ")) {
                 System.out.println(e);
             }
         }
@@ -56,8 +48,7 @@ public class FreePassRuCollector extends ProxyCollector
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "free-pass.ru";
     }
 

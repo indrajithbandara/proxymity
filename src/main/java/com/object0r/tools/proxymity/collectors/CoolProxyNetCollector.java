@@ -12,26 +12,21 @@ import java.util.regex.Pattern;
 /**
  * The type Cool proxy net collector.
  */
-public class CoolProxyNetCollector extends ProxyCollector
-{
+public class CoolProxyNetCollector extends ProxyCollector {
     /**
      * Instantiates a new Cool proxy net collector.
      *
      * @param collectorParameters the collector parameters
      */
-    public CoolProxyNetCollector(CollectorParameters collectorParameters)
-    {
+    public CoolProxyNetCollector(CollectorParameters collectorParameters) {
         super(collectorParameters);
     }
-    
-    public Vector<ProxyInfo> collectProxies()
-    {
-        try
-        {
 
-            for (int i = 1; i<50; i++)
-            {
-                String url = "http://www.cool-proxy.net/proxies/http_proxy_list/sort:score/direction:desc/page:"+i;
+    public Vector<ProxyInfo> collectProxies() {
+        try {
+
+            for (int i = 1; i < 50; i++) {
+                String url = "http://www.cool-proxy.net/proxies/http_proxy_list/sort:score/direction:desc/page:" + i;
                 String page = downloadPageWithPhantomJs(url);
                /* driver.get(url);
                 WebElement body = driver.findElement(By.tagName("Body"));
@@ -40,8 +35,7 @@ public class CoolProxyNetCollector extends ProxyCollector
                 Pattern p = Pattern.compile("\\d+\\.\\d+\\.\\d+\\.\\d+ \\d+", Pattern.DOTALL);
                 boolean foundAtLeastOne = false;
                 Matcher m = p.matcher(page);
-                while (m.find())
-                {
+                while (m.find()) {
                     foundAtLeastOne = true;
                     String line = m.group();
                     //System.out.println(line);
@@ -54,8 +48,7 @@ public class CoolProxyNetCollector extends ProxyCollector
                     proxyInfo.setType(ProxyInfo.PROXY_TYPES_HTTP);
                     addProxy(proxyInfo);
                 }
-                if (!foundAtLeastOne)
-                {
+                if (!foundAtLeastOne) {
                     break;
                 }
             }
@@ -63,17 +56,14 @@ public class CoolProxyNetCollector extends ProxyCollector
         /*catch (FileNotFoundException e)
         {
             return proxies;
-        }*/
-        catch (Exception e)
-        {
+        }*/ catch (Exception e) {
             e.printStackTrace();
         }
         return getProxies();
     }
 
     @Override
-    protected String collectorName()
-    {
+    protected String collectorName() {
         return "cool-proxy.net";
     }
 
@@ -83,42 +73,31 @@ public class CoolProxyNetCollector extends ProxyCollector
      * @param string the string
      * @return the string
      */
-    String strRot13(String string)
-    {
+    String strRot13(String string) {
 
-        try
-        {
+        try {
             StringBuffer sb = new StringBuffer();
-            for (int i = 0 ; i<string.length(); i++)
-            {
+            for (int i = 0; i < string.length(); i++) {
                 char c = string.charAt(i);
                 if (
-                        (c>='a' && c <='z')
-                        || (c>='A' && c <='Z')
-                        )
-                {
+                        (c >= 'a' && c <= 'z')
+                                || (c >= 'A' && c <= 'Z')
+                        ) {
                     //System.out.print(c);
-                    if ((c > 'a' && c<'n') || (c > 'z' && c<'N'))
-                    {
-                        int charInt = (int)c;
-                        c = Character.toChars(charInt+13)[0];
-                    }
-                    else
-                    {
-                        int charInt = (int)c;
-                        c = Character.toChars(charInt-13)[0];
+                    if ((c > 'a' && c < 'n') || (c > 'z' && c < 'N')) {
+                        int charInt = (int) c;
+                        c = Character.toChars(charInt + 13)[0];
+                    } else {
+                        int charInt = (int) c;
+                        c = Character.toChars(charInt - 13)[0];
                     }
                     sb.append(c);
-                }
-                else
-                {
+                } else {
                     sb.append(c);
                 }
             }
             return sb.toString();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "";

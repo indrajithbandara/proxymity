@@ -3,8 +3,12 @@ package com.object0r.tools.proxymity;
 /**
  * The type Db information.
  */
-public class DbInformation
-{
+public class DbInformation {
+    private String username;
+    private String password;
+    private String url;
+    private int port;
+    private String database;
     /**
      * Instantiates a new Db information.
      *
@@ -14,8 +18,7 @@ public class DbInformation
      * @param port     the port
      * @param database the database
      */
-    DbInformation(String url, String username, String password,  int port, String database)
-    {
+    DbInformation(String url, String username, String password, int port, String database) {
         this.username = username;
         this.password = password;
         this.database = database;
@@ -23,19 +26,12 @@ public class DbInformation
         this.port = port;
     }
 
-    private String username;
-    private String password;
-    private String url;
-    private int port;
-    private String database;
-
     /**
      * Gets username.
      *
      * @return the username
      */
-    public String getUsername()
-    {
+    public String getUsername() {
         return username;
     }
 
@@ -44,8 +40,7 @@ public class DbInformation
      *
      * @param username the username
      */
-    public void setUsername(String username)
-    {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -54,8 +49,7 @@ public class DbInformation
      *
      * @return the password
      */
-    public String getPassword()
-    {
+    public String getPassword() {
         return password;
     }
 
@@ -64,8 +58,7 @@ public class DbInformation
      *
      * @param password the password
      */
-    public void setPassword(String password)
-    {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -74,8 +67,7 @@ public class DbInformation
      *
      * @return the url
      */
-    public String getUrl()
-    {
+    public String getUrl() {
         return url;
     }
 
@@ -84,8 +76,7 @@ public class DbInformation
      *
      * @param url the url
      */
-    public void setUrl(String url)
-    {
+    public void setUrl(String url) {
         this.url = url;
     }
 
@@ -94,8 +85,7 @@ public class DbInformation
      *
      * @return the port
      */
-    public int getPort()
-    {
+    public int getPort() {
         return port;
     }
 
@@ -104,8 +94,7 @@ public class DbInformation
      *
      * @param port the port
      */
-    public void setPort(int port)
-    {
+    public void setPort(int port) {
         this.port = port;
     }
 
