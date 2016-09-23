@@ -47,7 +47,6 @@ public class SocksProxyNetCollector extends ProxyCollector {
                         proxyInfo.setPort(port);
                         proxyInfo.setType(ProxyInfo.PROXY_TYPES_SOCKS5);
                         addProxy(proxyInfo);
-                        ;
                     }
                 } catch (Exception ee) {
                     ee.printStackTrace();

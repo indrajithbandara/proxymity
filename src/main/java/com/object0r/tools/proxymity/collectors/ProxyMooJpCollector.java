@@ -63,7 +63,6 @@ public class ProxyMooJpCollector extends ProxyCollector {
                     //System.out.println(port);
 
                     String type = Utilities.cut(port + "</td><td align=\"center\">", "</td><td align=\"center\">", line);
-                    ;
                     //System.out.println(type);
 
 
@@ -92,7 +91,6 @@ public class ProxyMooJpCollector extends ProxyCollector {
                 Thread.sleep(60000);
             } catch (Exception we) {
                 we.printStackTrace();
-                ;
             }
 
 

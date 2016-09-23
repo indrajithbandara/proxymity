@@ -72,7 +72,6 @@ public class Proxymity {
      * The constant HTTPS_CHECK_STRING.
      */
     public static String HTTPS_CHECK_STRING = "\"origin\": \"";
-    ;
     /**
      * The Use tor.
      */
@@ -160,7 +159,6 @@ public class Proxymity {
                         Thread.sleep(SLEEP_BETWEEN_REPORTS_SECONDS * 1000);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        ;
                     }
                 }
             }
@@ -228,7 +226,7 @@ public class Proxymity {
             }
         }
         if (properties.get("useTor") != null) {
-            String useTor = (String) properties.get("useTor") + "".toLowerCase();
+            String useTor = properties.get("useTor") + "".toLowerCase();
             if (useTor.equals("true")) {
                 useTor();
             }

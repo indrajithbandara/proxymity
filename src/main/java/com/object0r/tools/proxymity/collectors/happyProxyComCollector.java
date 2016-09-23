@@ -46,7 +46,6 @@ public class happyProxyComCollector extends ProxyCollector {
                             Thread.sleep(new Random().nextInt(5000));
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ;
                         }
 
                     }
@@ -68,7 +67,6 @@ public class happyProxyComCollector extends ProxyCollector {
                             Thread.sleep(new Random().nextInt(5000));
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ;
                         }
                     }
                 }
@@ -86,7 +84,6 @@ public class happyProxyComCollector extends ProxyCollector {
                             Thread.sleep(new Random().nextInt(5000));
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ;
                         }
                     }
                 }
@@ -104,7 +101,6 @@ public class happyProxyComCollector extends ProxyCollector {
                             Thread.sleep(new Random().nextInt(5000));
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ;
                         }
                     }
                 }
@@ -123,7 +119,6 @@ public class happyProxyComCollector extends ProxyCollector {
                             Thread.sleep(new Random().nextInt(5000));
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ;
                         }
                     }
                 }
@@ -141,7 +136,6 @@ public class happyProxyComCollector extends ProxyCollector {
                             Thread.sleep(new Random().nextInt(5000));
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ;
                         }
                     }
                 }
@@ -158,7 +152,6 @@ public class happyProxyComCollector extends ProxyCollector {
                             Thread.sleep(new Random().nextInt(5000));
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ;
                         }
                     }
                 }
@@ -175,7 +168,6 @@ public class happyProxyComCollector extends ProxyCollector {
                             Thread.sleep(new Random().nextInt(5000));
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ;
                         }
                     }
                 }
@@ -192,7 +184,6 @@ public class happyProxyComCollector extends ProxyCollector {
                             Thread.sleep(new Random().nextInt(5000));
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ;
                         }
                     }
                 }
@@ -209,7 +200,6 @@ public class happyProxyComCollector extends ProxyCollector {
                             Thread.sleep(new Random().nextInt(5000));
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ;
                         }
                     }
                 }
@@ -226,7 +216,6 @@ public class happyProxyComCollector extends ProxyCollector {
                             Thread.sleep(new Random().nextInt(5000));
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ;
                         }
                     }
                 }
@@ -243,7 +232,6 @@ public class happyProxyComCollector extends ProxyCollector {
                             Thread.sleep(new Random().nextInt(5000));
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ;
                         }
                     }
                 }
@@ -260,7 +248,6 @@ public class happyProxyComCollector extends ProxyCollector {
                             Thread.sleep(new Random().nextInt(5000));
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ;
                         }
                     }
                 }
@@ -277,7 +264,6 @@ public class happyProxyComCollector extends ProxyCollector {
                             Thread.sleep(new Random().nextInt(5000));
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ;
                         }
                     }
                 }

@@ -45,7 +45,6 @@ public class ProxyDbNetCollector extends ProxyCollector {
             t3.start();
 
             t.join();
-            ;
             t2.join();
             t3.join();
         } catch (Exception e) {

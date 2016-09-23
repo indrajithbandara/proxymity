@@ -98,7 +98,7 @@ public class ProxyFireNet extends ProxyCollector {
      * @throws IOException           the io exception
      */
     public void saveUrl(final String filename, final String urlString)
-            throws MalformedURLException, IOException {
+            throws IOException {
         BufferedInputStream in = null;
         FileOutputStream fout = null;
         try {

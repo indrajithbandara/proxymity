@@ -32,7 +32,6 @@ public class proxzComCollector extends ProxyCollector {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ;
                 }
 
             }
