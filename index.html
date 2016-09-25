@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Proxymity by theodesp</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Proxymity</h1>
+        <h2>Proxies Extractor on steroids with extra body mass.</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/theodesp/proxymity/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/theodesp/proxymity/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/theodesp/proxymity" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a id="proxymity" class="anchor" href="#proxymity" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Proxymity</h1>
+
+<p>Proxymity is a tool that extracts anonymous proxies using various ways. </p>
+
+<p>Then it constantly verifies them and tests their capabilities.</p>
+
+<p>It scans lots of online websites and employs advanced techniques to bypass protections like Javascript Evaluation and captchas.</p>
+
+<h1>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h1>
+
+<p>The easiest way to run Proxymity is to use Docker (Described below).</p>
+
+<p>If you want to install it in Debian/Ubuntu read below.</p>
+
+<p>Dependencies:</p>
+
+<pre><code>1) PhantomJs
+2) gocr
+3) ImageMagick (command line command is convert)
+4) Mysql database/
+</code></pre>
+
+<p>All tools must be installed and added to the path and accessible from the command line.</p>
+
+<p>Ubuntu:</p>
+
+<p>sudo apt-get install imagemagick gocr phantomjs</p>
+
+<p>Windows versions are included in the bin folder and used automatically by the code.</p>
+
+<p>Tested on JDK 8.</p>
+
+<h2>
+<a id="where-are-proxies-stored-" class="anchor" href="#where-are-proxies-stored-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Where are proxies Stored ?</h2>
+
+<p>Proxies are stored in the mysql databased provided. You need to provide a mysql database_user/password/database_name. The table is automatically created, along with a stored procedure</p>
+
+<p>getRandomProxy()</p>
+
+<p>This is called as:</p>
+
+<pre><code>getRandomProxy(NULL); - Get any type active proxy
+getRandomProxy('http'); - Get any type active proxy of type http
+getRandomProxy('socks4'); - Get any type active proxy of type socks4
+getRandomProxy('socks5'); - Get any type active proxy of type socks5
+</code></pre>
+
+<p>On a Docker machine you can access the proxies by visiting: http://localhost:81/activeproxies.php?start=0&amp;limit=100</p>
+
+<h1>
+<a id="docker" class="anchor" href="#docker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Docker</h1>
+
+<p>The easiest way to run this is with Docker.</p>
+
+<p>Make sure you have Docker installed. Instructions for all major distributions here:</p>
+
+<pre><code>https://docs.docker.com/engine/installation/
+</code></pre>
+
+<p>Then run these commands:</p>
+
+<pre><code>./build_docker.sh
+./run_docker.sh
+</code></pre>
+
+<p>You can see the proxies at http://localhost:81/activeproxies.php?start=0&amp;limit=100</p>
+
+<p>Adjust start and limit to your linking.</p>
+
+<p>The output is json and self-explained.</p>
+
+<h1>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration</h1>
+
+<ul>
+<li>config.properties.sample contains all values that can be set.</li>
+<li>Copy config.properties.sample to config.properties and edit it.</li>
+<li>The file for Docker is Docker/config.properties</li>
+</ul>
+
+<h1>
+<a id="windows" class="anchor" href="#windows" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Windows</h1>
+
+<p>Binaries files are included for portability on windows. You are free to delete bin directory in if not needed.</p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
